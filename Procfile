@@ -1,1 +1,1 @@
-web: gunicorn Project01.wsgi
+web: gunicorn Project01.wsgi --log-file -
