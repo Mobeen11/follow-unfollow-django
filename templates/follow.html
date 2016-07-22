@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+
+<!-- Profile View -->
+{% block content %}
+    <h1>Now you are following:</h1>
+    {#    {% for pro in profile %}#}
+{#    {%  if user.is_authenticated %}#}
+
+{#        {%  if user.username == profile %}#}
+            <h1>{{ profile }}</h1>
+
+            {{ profile.followers }}
+{#        {% endif %}#}
+
+{#    {%  endif %}#}
+
+    {#    {% endfor %}#}
+
+    {#    <h1><a href="{% url 'follow_view' username=profile.user %}" class="btn btn-primary">Follow</a></h1>#}
+    {#     <input type="button"  value="Follow" name="Follow">#}
+
+{% endblock %}

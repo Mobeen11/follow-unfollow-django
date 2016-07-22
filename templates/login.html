@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+
+<!--signIN Form -->
+
+{% block content %}
+ <!--to display the error message for login-->
+    {% if messages %}
+    <div class="row">
+        <div class="col-xs-12">
+            {% for message in messages %}
+            <p {% if message.tags %} class="alert alert-danger" role="alert"{% endif %}> {{ message }}</p>
+            {% endfor %}
+        </div>
+    </div>
+    {% endif %}
+
+{#<!--{{ userobj.username }}-->#}
+
+<h1>{{title}}</h1>
+
+<div class="panel panel-primary">
+    <div class="panel-heading"  style="background-color: #197929">
+        <h3 >LogIn Yourself</h3>
+    </div>
+
+    <div class="panel-body">
+        <form method='POST'>
+            {% csrf_token %}
+
+            {{ form.as_p }}
+
+            <input type="submit" class="btn btn-primary " style="background-color: #197929 " name="Login" value="LogIn"/>
+        </form>
+    </div>
+</div>
+
+{% endblock %}

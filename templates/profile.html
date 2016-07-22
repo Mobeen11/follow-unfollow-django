@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+
+<!-- all users View -->
+{% block content %}
+
+    {%  for users in user %}
+
+        <h1>{{ users.username }}</h1>
+
+        {#        {{ profile.followers }}#}
+        {% if users.id in relation %}
+            <h1><a href="{% url 'follow_view' username=users.username %}" class="btn btn-primary">UnFollow</a></h1>
+        {% else %}
+            <h1><a href="{% url 'follow_view' username=users.username %}" class="btn btn-primary">Follow</a></h1>
+        {% endif %}
+
+    {% endfor %}
+
+
+
+
+
+{#         <h1><a href="{% url 'follow_view' username=u.username %}" class="btn btn-primary">UNFollow</a></h1>#}
+
+
+    {#     <input type="button"  value="Follow" name="Follow">#}
+    {#    {%  endif %}#}
+{% endblock %}

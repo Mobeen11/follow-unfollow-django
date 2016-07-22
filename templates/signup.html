@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+
+{% block content %}
+<!--to display the error message for login-->
+    {% if messages %}
+    <div class="row">
+        <div class="col-xs-12">
+            {% for message in messages %}
+            <p {% if message.tags %} class="alert alert-success" role="alert"{% endif %}> {{ message }}</p>
+            {% endfor %}
+        </div>
+
+    </div>
+    {% endif %}
+<!-- USER SIGN UP -->
+<form method='POST'>
+{%  csrf_token %}
+
+    <div class="panel panel-primary" >
+        <div class="panel-heading" >
+            <h3 >Sign Up</h3>
+        </div>
+
+        <div class="panel-body">
+
+            {% csrf_token %}
+
+            {{ form.as_p }}
+
+            <input class="btn btn-primary" style="background-color: #197929 " type='submit' value='Sign Up'/>
+        </div>
+    </div>
+
+</form>
+
+
+{% endblock %}

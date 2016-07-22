@@ -1,0 +1,77 @@
+{% load staticfiles %}
+<html>
+
+<head>
+    <title>
+        Follow & unFollow
+    </title>
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
+    <link href="//fonts.googleapis.com/css?family=Lobster&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="{% static 'css/follow_unfollow.css' %}">
+
+    <script type="text/javascript" src='https://cdn.tinymce.com/4/tinymce.min.js'></script>
+    <script type="text/javascript">
+        tinymce.init({
+            selector: 'textarea',
+            theme: 'modern',
+            statusbar: false,
+            width: 600,
+            height: 300,
+            plugins: 'paste',
+            toolbar: 'code',
+            // plugins: [
+            //   'advlist autolink link image lists charmap print preview hr anchor pagebreak spellchecker',
+            //   'searchreplace wordcount visualblocks visualchars code fullscreen insertdatetime media nonbreaking',
+            //   'save table contextmenu directionality emoticons template paste textcolor'
+            // ],
+            paste_as_text: true,
+            paste_auto_cleanup_on_paste : true,
+            paste_remove_styles: true,
+            paste_remove_styles_if_webkit: true,
+            paste_strip_class_attributes: 'all',
+            content_css: 'css/content.css',
+            toolbar: 'insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image | print preview media fullpage | forecolor backcolor emoticons'
+
+        });
+    </script>
+
+</head>
+
+
+<body>
+<div class="page-header">
+
+{#    <!--<a href="{% url 'post_draft_list' %}" class="top-menu"><span class="glyphicon glyphicon-edit"></span></a>-->#}
+
+    {% if user.is_authenticated %}
+    <a href="{% url 'logout_view' %}"><button class="btn btn-primary" class="top-menu" data-toggle="modal" data-target=".bs-example-modal-sm" ><span class="glyphicon glyphicon-user">Logout</span></button></a>
+{#    <a href="{% url 'post_new' %}" class="top-menu"><span class="glyphicon glyphicon-plus"></span></a>#}
+    {% else %}
+    <a href="{% url 'login_view' %}" class="top-menu"><span class="glyphicon glyphicon-user"></span></a>
+
+    {% endif %}
+
+
+
+    <h1><a href="profile url">Follow unFollow</a></h1>
+
+
+</div>
+<div class="content container">
+
+
+
+    <div class="row">
+        <div class="col-md-8">
+
+            {% block content %}
+            {% endblock %}
+
+        </div>
+    </div>
+</div>
+
+</body>
+
+</html>

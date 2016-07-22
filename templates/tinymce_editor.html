@@ -1,0 +1,35 @@
+
+{% extends "base.html" %}
+
+{% block content %}
+
+<!-- <head>
+  <script src='https://cdn.tinymce.com/4/tinymce.min.js'></script>
+  <script>
+  tinymce.init({
+  selector: 'textarea',  // change this value according to your HTML
+  plugin: 'a_tinymce_plugin',
+  // plugins : 'advlist autolink link image lists charmap print preview',
+  // a_plugin_option: true,
+  a_configuration_option: 400,
+  toolbar: false,
+  // menubar: 'file edit view',
+  menu: {
+    view: {title: 'Edit', items: 'cut, copy, paste'}
+  }
+});
+  </script>
+</head> -->
+{#<head>#}
+{##}
+{#</head>#}
+
+{#<body>#}
+<h1>TinyMCE Quick Start Guide</h1>
+  <form method="post">
+    <textarea id="mytextarea">Hello, World!</textarea>
+  </form>
+{#</body>#}
+{#</html>#}
+
+{% endblock %}

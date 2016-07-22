@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+
+
+<!-- user's Profile View -->
+{% block content %}
+
+    {#    {%  for users in user %}#}
+
+    <h1>{{ user.username }}</h1>
+
+{#                    {{ profile.followers }}#}
+
+
+    {#        <h1><a href="{% url 'follow_view' username=users.username %}" class="btn btn-primary">Follow</a></h1>#}
+    {#    {% endfor %}#}
+
+    {#    {% for u in relation %}#}
+    {#        <h1>{{ u.username }}</h1>#}
+    {#    {% endfor %}#}
+    {#<h1>TinyMCE Quick Start Guide</h1>#}
+{#    <textarea id="mytextarea" name="mytextarea"></textarea>#}
+    <form method="POST">
+        {%  csrf_token %}
+
+            {{ form.as_p }}
+
+
+
+        <hr>
+        <input type="submit" class="btn btn-primary" value="Save"/>
+        <h1>Follwing:</h1>
+        {% for rel in relations %}
+            <h3>{{ rel }}</h3>
+        {% endfor %}
+    </form>
+
+
+{% endblock %}
+
+{#{% block content %}#}
+{#     {% endblock %}#}
