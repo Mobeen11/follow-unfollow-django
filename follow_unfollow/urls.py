@@ -15,5 +15,7 @@ urlpatterns = [
     url(r'^post_list/$', views.postlist_view, name='postlist_view'),
     url(r'^post/(?P<pk>\d+)/$', views.post_detail, name='post_detail'),
     url(r'^post/(?P<pk>\d+)/edit/$', views.post_edit, name='post_edit'),
+    url(r'^userspost', views.following_userspost_view, name='following_userspost_view'),
+    url(r'^followusers/(?P<username>[\w.@+-]+)/$', views.follow_users_view, name='follow_users_view')
 
 ]+ static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

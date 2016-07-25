@@ -11,7 +11,7 @@ class PostAdmin(admin.ModelAdmin):
     list_display = ["author", "published_date", "text"]
 
 class RelationshipAdmin(admin.ModelAdmin):
-    list_display = ["follow", "following", "my_status"]
+    list_display = ["following", "follow", "my_status"]
 
 admin.site.register(UserProfile)
 admin.site.register(RelationShip, RelationshipAdmin)

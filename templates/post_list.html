@@ -1,18 +1,18 @@
 {% extends "base.html" %}
 
-
+<!-- POST LIST -->
 {% block content %}
     {% for post in posts %}
 
-
+        <h3> {{ post.author }} </h3>
         <div class="post">
-            <div class="date">
-                <!-- POST LIST -->
-                <h6>{{ post.published_date }}</h6>
-            </div>
+
             <h1><a href="{% url 'post_detail' pk=post.pk %}" >{{ post.title }}</a></h1>
             <p>{{ post.text|safe|linebreaksbr }}</p>
+            <div class="date">
+                <h6>{{ post.published_date }}</h6>
 
+            </div>
         </div>
 
     {% endfor %}

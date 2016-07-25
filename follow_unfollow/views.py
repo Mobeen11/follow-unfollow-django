@@ -66,7 +66,8 @@ def login_view(request):
             if user_login is not None:
                 auth_login(request, user_login)
                 user = request.user
-                return HttpResponseRedirect(reverse('profile_view', args=(l_username),))
+                #return HttpResponseRedirect(reverse('all'))
+                return redirect('postlist_view')
                 #return render(request, 'profile.html', {'username': l_username })
             else:
                 print "error"
@@ -196,3 +197,20 @@ def post_edit(request, pk):
         form = PostForm(instance=post)
         print "this is the post edit else"
     return render(request, 'post_edit.html', {'form': form})
+
+def following_userspost_view(request):
+
+   pass
+
+
+def follow_users_view(request, username):
+    user = get_object_or_404(User, username=username)
+    relation = RelationShip.objects.filter(following=user).values_list('follow_id', flat=True)
+    posts = Post.objects.all().filter(author__in = relation)
+        #.values_list('follow_id', flat=True)
+    print "user",user
+    print "relation",relation
+    print "post", posts
+
+
+    return render(request, 'followuser.html', {'user':user, 'relation': relation, 'post':posts})

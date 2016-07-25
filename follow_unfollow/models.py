@@ -20,7 +20,7 @@ status = (
 
 
 class RelationShip(models.Model):
-    follow = models.ForeignKey(User, related_name='follow')
+    follow = models.ForeignKey(User, related_name='follow')             #admin
     following = models.ForeignKey(User, related_name='following')
     my_status = models.CharField(max_length=120, null=True, blank=True)
 
