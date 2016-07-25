@@ -22,8 +22,7 @@ from .form import PostForm
 from tinymce.widgets import TinyMCE
 from tinymce.views import render_to_link_list
 from django.utils.html import strip_tags
-
-
+from django.contrib.auth.decorators import login_required
 # Create your views here.
 
 def register_view(request):
@@ -85,9 +84,9 @@ def logout_view(request):
 
 def profile_view(request, username):
     user = get_object_or_404(User, username=username)
-    u = User.objects.get(email__iexact=request.user.email)
+    #u = User.objects.get(username=username)
     profile, created = UserProfile.objects.get_or_create(user=user)
-    relation = RelationShip.objects.filter(follow=u).values_list('following',flat=True)
+    relation = RelationShip.objects.filter(follow=user).values_list('following',flat=True)
         #.exclude(follow = request.user)    # this query goes wrong because you have inserted the wrong data in the get_or_create
     #relation = RelationShip.objects.filter(following=u)
     print "profile",profile
@@ -114,7 +113,7 @@ def profile_view(request, username):
     return render(request, 'user_profile.html', {"relations": relation, "form":form })
 
 
-
+#@login_required
 def all_view(request):
     u = User.objects.get(email__iexact=request.user.email)
     print "u:",u
