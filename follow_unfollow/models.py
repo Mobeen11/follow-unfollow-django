@@ -31,7 +31,7 @@ class RelationShip(models.Model):
 class Post(models.Model):
     author = models.ForeignKey('auth.User', related_name='post_author')
     text = tinymce_models.HTMLField()
-    created_date =  models.DateTimeField(default=timezone.now())
+    created_date =  models.DateTimeField(default=timezone.now)
     published_date = models.DateTimeField(blank=True, null=True)
 
     def publish(self):
