@@ -206,7 +206,7 @@ def following_userspost_view(request):
 def follow_users_view(request, username):
     user = get_object_or_404(User, username=username)
     relation = RelationShip.objects.filter(following=user).values_list('follow_id', flat=True)
-    posts = Post.objects.all().filter(author__in = relation)
+    posts = Post.objects.filter(author__in = relation)
         #.values_list('follow_id', flat=True)
     print "user",user
     print "relation",relation
@@ -214,3 +214,19 @@ def follow_users_view(request, username):
 
 
     return render(request, 'followuser.html', {'user':user, 'relation': relation, 'post':posts})
+
+
+def relationship_status_view(request, username):
+    user = get_object_or_404(User, username=username)
+    relation = RelationShip.objects.filter(following=user).values_list('follow_id', flat=True)
+    mutual_relation = RelationShip.objects.filter(follow=user).values_list('following_id', flat=True)
+    test_relation = RelationShip.objects.filter(following__in=relation).values_list('following_id', flat=True)
+
+        #.values_list('following_id', flat=True)
+    print "relation status", relation
+    print "mutual relation", mutual_relation
+    print "test relation", test_relation
+
+
+
+    return render(request, 'relationstatus.html',{'relation':relation, 'mutualrelation':mutual_relation})

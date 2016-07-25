@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+
+{#relation status of the users#}
+
+
+{% block content %}
+
+{% for usr in relation %}
+
+{#    <p>{{ usr }}</p>#}
+
+    {% for mu in mutualrelation %}
+
+        {% if mu == usr %}
+
+            <p>{{ mu }}</p>
+
+
+        {% endif %}
+
+    {% endfor %}
+
+    {% endfor %}
+
+{#     <h3>LoggedIn User: {{ user.username }}</h3>#}
+{#    {% for mr in relation %}#}
+{##}
+{#        <p>{{ mr }}</p>#}
+{#        {% if user.username == mr %}#}
+{#            <p>this is if </p>#}
+{#            <p>{{ mr }}</p>#}
+{#        {% endif %}#}
+{##}
+{#    {% endfor %}#}
+{##}
+{#    {% endfor %}#}
+
+{% endblock %}
+
