@@ -17,6 +17,7 @@ urlpatterns = [
     url(r'^post/(?P<pk>\d+)/edit/$', views.post_edit, name='post_edit'),
     url(r'^userspost', views.following_userspost_view, name='following_userspost_view'),
     url(r'^followusers/(?P<username>[\w.@+-]+)/$', views.follow_users_view, name='follow_users_view'),
-    url(r'^relationstatus/(?P<username>[\w.@+-]+)/$', views.relationship_status_view, name='relationstatus_view')
+    url(r'^relationstatus/(?P<username>[\w.@+-]+)/$', views.relationship_status_view, name='relationstatus_view'),
+    url(r'^calendar/', views.calendar, name='calendar'),
 
 ]+ static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

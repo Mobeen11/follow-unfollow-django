@@ -12,7 +12,7 @@ https://docs.djangoproject.com/en/1.6/ref/settings/
 import os
 BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 
-SETTINGS_PATH = os.path.dirname(os.path.dirname(__file__))
+#SETTINGS_PATH = os.path.dirname(os.path.dirname(__file__))
 
 
 # Quick-start development settings - unsuitable for production
@@ -26,7 +26,7 @@ DEBUG = True
 
 TEMPLATE_DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -72,24 +72,28 @@ DATABASES = {
 }
 
 TEMPLATE_DIRS = (
-    os.path.join(SETTINGS_PATH, 'templates'),
+    os.path.join(BASE_DIR, 'templates'),
 )
 
-TEMPLATES = [
-    {
-        'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(SETTINGS_PATH, 'templates')],
-        'APP_DIRS': True,
-        'OPTIONS': {
-            'context_processors': [
-                'django.template.context_processors.debug',
-                'django.template.context_processors.request',
-                'django.contrib.auth.context_processors.auth',
-                'django.contrib.messages.context_processors.messages',
-            ],
-        },
-    },
-]
+#TEMPLATE_DIRS = (
+#    os.path.join(BASE_DIR, 'follow_unfollow/template'),
+#)
+
+#TEMPLATES = [
+#    {
+#        'BACKEND': 'django.template.backends.django.DjangoTemplates',
+#        'DIRS': [os.path.join(BASE_DIR, 'templates')],
+#        'APP_DIRS': True,
+#        'OPTIONS': {
+#            'context_processors': [
+#                'django.template.context_processors.debug',
+#                'django.template.context_processors.request',
+#                'django.contrib.auth.context_processors.auth',
+#                'django.contrib.messages.context_processors.messages',
+#            ],
+#        },
+#    },
+#]
 
 
 # Internationalization
@@ -111,16 +115,17 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
-STATIC_ROOT = os.path.join(BASE_DIR, "static")
+STATIC_ROOT = os.path.join(os.path.dirname(BASE_DIR), "static", "css")
+print(STATIC_ROOT)
 
 # error in static files
-#STATICFILES_DIR = (
-#    os.path.join(BASE_DIR, "")
-#)
+STATICFILES_DIR = (
+    os.path.join(os.path.dirname(BASE_DIR), "static", "css")
+)
 #
 
 MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.join(os.path.dirname(BASE_DIR),"follow_unfollow/static")
+MEDIA_ROOT = os.path.join(os.path.dirname(BASE_DIR),"static")
 
 
 import dj_database_url
@@ -130,7 +135,7 @@ SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
 ALLOWED_HOSTS = ['*']
 
-DEBUG = False
+DEBUG = True
 
 try:
     from .local_settings import *

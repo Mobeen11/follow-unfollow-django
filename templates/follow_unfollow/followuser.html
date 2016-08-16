@@ -1,0 +1,25 @@
+{% extends "follow_unfollow/base.html" %}
+
+{#follow users of the logged IN user#}
+
+
+{% block content %}
+
+{{ user }}
+
+{% for usr in relation %}
+
+    <p>{{ usr }}</p>
+
+    {% endfor %}
+
+{% for po in post %}
+
+    <h3>{{ po.author }}</h3><p>{{ po.text|safe }}</p>
+
+    {% endfor %}
+
+
+
+
+{% endblock %}

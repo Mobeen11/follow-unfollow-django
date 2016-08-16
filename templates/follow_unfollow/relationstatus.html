@@ -1,19 +1,19 @@
-{% extends "base.html" %}
+{% extends "follow_unfollow/base.html" %}
 
 {#relation status of the users#}
 
 
 {% block content %}
 
-{% for usr in relation %}
+{% for usr in relation_status %}
 
 {#    <p>{{ usr }}</p>#}
 
-    {% for mu in mutualrelation %}
+    {% for mu in mutualrelation_status %}
 
         {% if mu == usr %}
 
-            <p>{{ mu }}</p>
+            <p>{{ usr }}</p>
 
 
         {% endif %}
