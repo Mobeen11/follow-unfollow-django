@@ -63,10 +63,10 @@ WSGI_APPLICATION = 'Project01.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'test',
-        'USER': 'postgres',
-        'PASSWORD': 'asd',
-        'HOST': '127.0.0.1',
+        'NAME': 'df93k0jlp0crks',
+        'USER': 'wqgxjmgettnmlt',
+        'PASSWORD': 'Kmpy16WyV0UMl2MT-EmZ-vUUC6',
+        'HOST': 'ec2-54-227-245-222.compute-1.amazonaws.com',
         'PORT': '5432',
     }
 }
@@ -115,12 +115,13 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
-STATIC_ROOT = os.path.join(os.path.dirname(BASE_DIR), "static", "css")
+STATIC_ROOT = os.path.join(os.path.dirname(BASE_DIR), "static")
 print(STATIC_ROOT)
 
 # error in static files
 STATICFILES_DIR = (
-    os.path.join(os.path.dirname(BASE_DIR), "static", "css")
+    os.path.join(os.path.dirname(BASE_DIR), "static")
+    # '/Users/Admin/Desktop/djangoProjects/follow-prog-2/static'
 )
 #
 
