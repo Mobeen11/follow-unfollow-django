@@ -6,4 +6,3 @@ python-social-auth
 django-tinymce==1.5.3
 pillow
 facebook
-GraphAPI
