@@ -91,13 +91,14 @@
         </nav><!-- /nav -->
 
         <div id="effect-1" class="effects clearfix">
-            
+            {% for i in images_display %}
             <div class="img">
-                <img src="{% static 'img/new1.png' %}" class="img-textual">
+                <img src="{{ i.image.url }}" class="img-textual">
 
             </div>
+            {% endfor %}
             <div class="img">
-                <img src="{% static 'img/new6.png' %}" alt="" class="img-textual">
+                <img src="{{ x }}" alt="" class="img-textual">
 
             </div>
             <div class="img">

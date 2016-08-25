@@ -31,6 +31,11 @@ def test(request):
     # profile = Profile.objects.all()
     # profile_image = profile.profile_image
     # context = {'profile_img': profile_image}
+    images = ImagesList.objects.all()
+    print "images: ", images
+    for i in images:
+        print "i: ", i.image
+    x = i.image
     print "this is view"
     user  = request.user
     if user.is_authenticated():
@@ -38,11 +43,14 @@ def test(request):
         profile = Profile.objects.get(username=user)
         print "profile: ", profile.profile_image
 
+
         context = {
             # 'image': profile.profile_image,
             # 'username': profile.username,
             'profile': profile,
             'image': profile.profile_image,
+            'images_display': images,
+            'x': x,
         }
 
     else:
@@ -56,7 +64,8 @@ def save(request):
     profile = Profile.objects.get(username=user)
     print "image is start"
     # had to change the path dynamically
-    background = Image.open('static/test/mubeenyousaf78952f92d6904ad3-social.png')
+    # background = Image.open('static/test/mubeenyousaf78952f92d6904ad3-social.png')
+    background = Image.open(profile.profile_image)
     # change the file name accordingly
     foreground = Image.open("static/img/new1.png")
     foreground = foreground.resize((50, 50))
@@ -93,6 +102,17 @@ def share_post(request):
     status.save()
 
     return redirect('test')
+
+from twitter import *
+def tweet(request):
+    t = Twitter(
+        auth=OAuth('HISKYRsVumzfw29OsuO6uemJY',
+                   '2sUI8VMPSaYpma1wQeQn6GSKP9o08uQAbtYQH5JAhIufWPT4Xv',
+                   'HISKYRsVumzfw29OsuO6uemJY',
+                   '2sUI8VMPSaYpma1wQeQn6GSKP9o08uQAbtYQH5JAhIufWPT4Xv')
+        )
+    pass
+
 
 
 
