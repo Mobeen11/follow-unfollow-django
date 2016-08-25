@@ -244,8 +244,8 @@ STATIC_URL = '/static/'
 
 # error in static files
 STATICFILES_DIR = (
-    # os.path.join(os.path.dirname(BASE_DIR), "static")
-    '/Users/Admin/Desktop/djangoProjects/follow-prog-2/static'
+    os.path.join(os.path.dirname(BASE_DIR), "static")
+    # '/Users/Admin/Desktop/djangoProjects/follow-prog-2/static'
 )
 # STATIC_ROOT = os.path.join(os.path.dirname(BASE_DIR), "static")
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
