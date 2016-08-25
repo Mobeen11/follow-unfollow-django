@@ -81,14 +81,14 @@ def save(request):
 def share_post(request):
     user = User.objects.get(username=request.user.username)
     print "user: ", user
-    statuses = FacebookStatus.objects.filter(author=user, status='approved', publish_timestamp=None)[:1]  # We only need one status for this test
-    statuses = Profile.objects.filter(username=user, )
+    statuses = FacebookStatus.objects.filter(author=user)[:1]  # We only need one status for this test
+
     print "statuses: ", statuses
     status = statuses[0]
     auth = user.social_auth.first()
     print "auth: ", auth.extra_data['access_token']
     graph = facebook.GraphAPI(auth.extra_data['access_token'])
-    graph.put_object('me', 'feed', message=status.message)
+    graph.put_object('me', 'feed', link=status.link)
     status.publish_timestamp = datetime.datetime.now()
     status.save()
 
