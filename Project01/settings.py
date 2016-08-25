@@ -66,7 +66,7 @@ MIDDLEWARE_CLASSES = (
 
 ROOT_URLCONF = 'Project01.urls'
 
-WSGI_APPLICATION = 'Project01.wsgi.application'
+WSGI_APPLICATION = 'Project01.wsgi:application'
 
 AUTHENTICATION_BACKENDS = (
 
