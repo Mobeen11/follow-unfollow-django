@@ -4,3 +4,4 @@ gunicorn==19.1.1
 psycopg2==2.5.1
 python-social-auth
 django-tinymce==1.5.3
+pillow
