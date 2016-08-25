@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+
+{%  block content %}
+
+
+{#    <a href="{% url 'socail:begin' 'facebook' %} ">Facebook Auth</a>#}
+
+
+    {% for provider in backends.not_associated %}
+
+        <li>
+            <a href="{% url 'social:begin' provider%}">
+                {{ provider }}
+            </a>
+        </li>
+
+    {% endfor %}
+
+    {% endblock %}

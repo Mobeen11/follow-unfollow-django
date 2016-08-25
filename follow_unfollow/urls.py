@@ -12,6 +12,7 @@ urlpatterns = [
     url(r'^profile/(?P<username>[\w.@+-]+)/$', views.profile_view, name='profile_view'),
     url(r'^follow/(?P<username>[\w.@+-]+)/$', views.follow_view, name='follow_view'),
     url(r'^post/new/$', views.newpost_view, name='newpost_view'),
+    url(r'^post/(?P<pk>\d+)/edit/$', views.post_edit, name='post_edit'),
     url(r'^post_list/$', views.postlist_view, name='postlist_view'),
     url(r'^post/(?P<pk>\d+)/$', views.post_detail, name='post_detail'),
     url(r'^post/(?P<pk>\d+)/edit/$', views.post_edit, name='post_edit'),
@@ -19,5 +20,11 @@ urlpatterns = [
     url(r'^followusers/(?P<username>[\w.@+-]+)/$', views.follow_users_view, name='follow_users_view'),
     url(r'^relationstatus/(?P<username>[\w.@+-]+)/$', views.relationship_status_view, name='relationstatus_view'),
     url(r'^calendar/', views.calendar, name='calendar'),
+
+    #ALL AUTH login and logout
+    # url(r'^home/$', views.home, name='home'),
+    # url(r'^done/$', views.done, name='done'),
+    # url(r'^logout/$', views.logout_view, name='logout'),
+    # url(r'^test/$', views.test, name='test'),
 
 ]+ static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

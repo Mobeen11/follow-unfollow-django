@@ -1,0 +1,181 @@
+{% load static from staticfiles %}
+<html lang="en" class="no-js">
+
+<head>
+
+<!-- title and meta -->
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1.0" />
+<meta name="description" content="Image overlay hover effects with CSS3 transitions. When we hover over an image, a neat transition will occur." />
+<title>Image Overlay Hover Effects With CSS3 Transitions</title>
+    
+<!-- css -->
+<link href='http://fonts.googleapis.com/css?family=Ubuntu:300,400,700,400italic' rel='stylesheet' type='text/css'>
+<link href='http://fonts.googleapis.com/css?family=Oswald:400,300,700' rel='stylesheet' type='text/css'>
+
+    <link rel="stylesheet" href="{% static 'css/site_base.css' %}" />
+    <link rel="stylesheet" href="{% static 'css/style.css' %}" />
+
+{#<link rel="stylesheet" href="/Users/Admin/Desktop/Mobeen/Tasks/testin_pycharm/static/css/site_base.css" />#}
+{#<link rel="stylesheet" href="/Users/Admin/Desktop/Mobeen/Tasks/testin_pycharm/static/css/site_base.css" />#}
+
+<!-- js -->
+<script src="{% static 'js/jquery-1.9.1.min.js' %}"></script>
+<script src="{% static 'js/modernizr.js' %} "></script>
+<script>
+    $(document).ready(function(){
+        if (Modernizr.touch) {
+            // show the close overlay button
+            $(".close-overlay").removeClass("hidden");
+            // handle the adding of hover class when clicked
+            $(".img").click(function(e){
+                if (!$(this).hasClass("hover")) {
+                    $(this).addClass("hover");
+                }
+            });
+            // handle the closing of the overlay
+            $(".close-overlay").click(function(e){
+                e.preventDefault();
+                e.stopPropagation();
+                if ($(this).closest(".img").hasClass("hover")) {
+                    $(this).closest(".img").removeClass("hover");
+                }
+            });
+        } else {
+            // handle the mouseenter functionality
+            $(".img").mouseenter(function(){
+                $(this).addClass("hover");
+            })
+            // handle the mouseleave functionality
+            .mouseleave(function(){
+                $(this).removeClass("hover");
+            });
+        }
+    });
+</script>
+
+
+</head>
+
+
+
+<body>
+
+<div id="wrapper">
+
+<div id="info-bar">
+    <div class="container clearfix">
+        <span class="all-tutorials"><a href="http://www.callmenick.com/tutorials">&larr; all tutorials</a></span>
+        <span class="back-to-tutorial"><a href="http://www.callmenick.com/tutorials/image-overlay-hover-effects-with-css3-transitions">back to the tutorial</a></span>
+    </div>
+</div><!-- /#top-bar -->
+
+<header>
+    <div id="title" class="container">
+        <h1>Image Overlay Effects</h1>
+    </div>
+</header><!-- /header -->
+
+
+<div id="main">
+    <div class="container">
+        
+        <nav id = 'nav-buttons'>
+            <ul>
+                <li><a href="/login/facebook" id='btn_1'>Login with Facebook</a></li>
+                <li><a href="/login/twitter" id='btn_2'>Login with Twitter</a></li>
+                <li><a href="/logout" id='btn_3'>Logout</a></li>
+
+            </ul>
+{#            <a href="/login/facebook" id='btn_5' >Login with Facebook</a>#}
+        </nav><!-- /nav -->
+
+        <div id="effect-1" class="effects clearfix">
+            
+            <div class="img">
+                <img src="{% static 'img/new1.png' %}" class="img-textual">
+
+            </div>
+            <div class="img">
+                <img src="{% static 'img/new6.png' %}" alt="" class="img-textual">
+
+            </div>
+            <div class="img">
+                <img src="{% static 'img/new4.png' %}" alt="" class="img-textual">
+
+            </div>
+
+            <div class="img">
+                <img src="{% static 'img/new7.png' %}"alt="" class="img-textual">
+
+            </div>
+
+
+        </div>
+        
+
+    </div><!-- /.container -->
+    <br/><br/>
+    <div class="container masking-image-wrap">
+
+        <div class="img">
+{#            {% if profile.username %}#}
+                {{ profile.name }}
+                <img src="{{ image.url }}" class='imgchange' alt="" width='255' height='230'>
+                <div class="img-overlay-mask">
+
+                        <img src="{% static 'img/trans.png' %}" id="mask-image" width='255' height='230'>
+                </div>
+
+
+
+{#            {% else %}#}
+{#                <h1>NOT LOGGED IN</h1>#}
+{#            {% endif %}#}
+        </div>
+        <a href="/save/" id='btn_5'>Save Image</a>
+        <a href="/share/" id='btn_5'>SHARE</a>
+{#        <img src="/static/img/1.png" >#}
+
+    </div>
+</div><!-- #main -->
+
+
+<footer>
+</footer><!-- /footer -->
+
+
+
+</div><!-- /#wrapper -->
+
+<script type="text/javascript">
+$( ".img-textual" ).click(function() {
+    // alert('sssss');
+    // var get_text = $(this).html();
+    // $(".overlaytext").html(get_text);
+    // alert("button")
+
+    var get_text = $(this).attr('src');
+
+    $("#mask-image").attr('src', get_text);
+});
+
+
+
+
+</script>
+
+
+<script type="text/javascript">
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-34160351-1']);
+  _gaq.push(['_trackPageview']);
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+</script>
+
+</body>
+</html>

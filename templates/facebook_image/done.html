@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+
+{%  block content %}
+
+
+{#    <a href="{% url 'socail:begin' 'facebook' %} ">Facebook Auth</a>#}
+
+
+    <h1> Connect More</h1>
+    {% for provider in backends.not_associated %}
+
+        <li>
+            <a href="{% url 'social:begin' provider %}">
+                {{ provider }}
+            </a>
+        </li>
+
+    {% endfor %}
+
+    <br />
+
+    <br /><br />
+
+    <h2>Disconnect Logins</h2>
+
+    {% for asso in backends.associated %}
+
+        <div>
+        <form method="post" action="{% url 'social:disconnect_individual' asso.provider asso.id%}">
+        {% csrf_token %}
+
+         <button class="btn btn-default">Disconnet   {{ asso.provider }}</button>
+
+        </form>
+        </div>
+
+    {% endfor %}
+
+
+    {% endblock %}

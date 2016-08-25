@@ -53,8 +53,8 @@ def register_view(request):
 def login_view(request):
     user = None
     form = LoginForm(request.POST or None)
-    print "start"
-    print form
+    # print "start"
+    # print form
     if request.method == "POST":
         user = LoginForm(request.POST)
         print "this is the post request"
@@ -114,7 +114,7 @@ def profile_view(request, username):
     return render(request, 'follow_unfollow/user_profile.html', {"relations": relation, "form":form })
 
 
-#@login_required
+@login_required
 def all_view(request):
     u = User.objects.get(email__iexact=request.user.email)
     print "u:",u
@@ -172,16 +172,18 @@ def newpost_view(request):
 
     return render(request,'follow_unfollow/user_profile.html',{'form':form})
 
-
+@login_required
 def postlist_view(request):
     post = Post.objects.filter(published_date__lte = timezone.now()).order_by('published_date')
     #print post
     return render(request, 'follow_unfollow/post_list.html',{'posts':post})
 
+@login_required
 def post_detail(request, pk):
     post = get_object_or_404(Post, pk = pk)
     return render(request, 'follow_unfollow/post_detail.html', {'post':post})
 
+@login_required
 def post_edit(request, pk):
     post = get_object_or_404(Post, pk=pk)
     if request.method == "POST":
@@ -198,6 +200,7 @@ def post_edit(request, pk):
         print "this is the post edit else"
     return render(request, 'follow_unfollow/post_edit.html', {'form': form})
 
+
 def following_userspost_view(request):
 
     pass
@@ -207,7 +210,6 @@ def follow_users_view(request, username):
     user = get_object_or_404(User, username=username)
     relation = RelationShip.objects.filter(following=user).values_list('follow_id', flat=True)
     posts = Post.objects.filter(author__in = relation)
-    #.values_list('follow_id', flat=True)
     print "user",user
     print "relation",relation
     print "post", posts
@@ -234,6 +236,45 @@ def relationship_status_view(request, username):
 
 
 
+
+
+#social auth views
+def home(request):
+
+    if request.user.is_authenticated():
+        return redirect('done')
+    return render(request, 'home.html')
+
+@login_required
+def done(request):
+
+    return render(request, "done.html", {})
+
+def logout_view(request):
+    logout(request)
+    return redirect('test')
+
+def test(request):
+    # # profile = Profile.objects.all()
+    # # profile_image = profile.profile_image
+    # # context = {'profile_img': profile_image}
+    # user  = request.user
+    # if user.is_authenticated():
+    #     print "user: ", user
+    #     profile = Profile.objects.get(username=user)
+    #     print "profile: ", profile.profile_image
+    #
+    #     context = {
+    #         # 'image': profile.profile_image,
+    #         # 'username': profile.username,
+    #         'profile': profile,
+    #     }
+    #
+    # else:
+    #     print "user doesn't exist"
+    #     context = {}
+    # return render(request, 'practice.html', context)
+    pass
 
 
 
@@ -289,6 +330,63 @@ def calendar(request):
   #  my_date__year=year, my_date__month=month
   #)
   cal = (2016, 04)
+  states = [
+      ['Alabama', 'AL'],
+      ['Alaska', 'AK'],
+      ['Arizona', 'AZ'],
+      ['Arkansas', 'AR'],
+      ['California', 'CA'],
+      ['Colorado', 'CO'],
+      ['Connecticut', 'CT'],
+      ['Delaware', 'DE'],
+      ['District of Columbia', 'DC'],
+      ['Florida', 'FL'],
+      ['Georgia', 'GA'],
+      ['Hawaii', 'HI'],
+      ['Idaho', 'ID'],
+      ['Illinois', 'IL'],
+      ['Indiana', 'IN'],
+      ['Iowa', 'IA'],
+      ['Kansas', 'KS'],
+      ['Kentucky', 'KY'],
+      ['Louisiana', 'LA'],
+      ['Maine', 'ME'],
+      ['Maryland', 'MD'],
+      ['Massachusetts', 'MA'],
+      ['Michigan', 'MI'],
+      ['Minnesota', 'MN'],
+      ['Mississippi', 'MS'],
+      ['Missouri', 'MO'],
+      ['Montana', 'MT'],
+      ['Nebraska', 'NE'],
+      ['Nevada', 'NV'],
+      ['New Hampshire', 'NH'],
+      ['New Jersey', 'NJ'],
+      ['New Mexico', 'NM'],
+      ['New York', 'NY'],
+      ['North Carolina', 'NC'],
+      ['North Dakota', 'ND'],
+      ['Ohio', 'OH'],
+      ['Oklahoma', 'OK'],
+      ['Oregon', 'OR'],
+      ['Pennsylvania', 'PA'],
+      ['Rhode Island', 'RI'],
+      ['South Carolina', 'SC'],
+      ['South Dakota', 'SD'],
+      ['Tennessee', 'TN'],
+      ['Texas', 'TX'],
+      ['Utah', 'UT'],
+      ['Vermont', 'VT'],
+      ['Virginia', 'VA'],
+      ['Washington', 'WA'],
+      ['West Virginia', 'WV'],
+      ['Wisconsin', 'WI'],
+      ['Wyoming', 'WY'],
+
+  ]
   return render(request, 'follow_unfollow/calendar.html', {'calendar': mark_safe(cal),})
+
+
+
 
 

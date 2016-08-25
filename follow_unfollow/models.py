@@ -18,6 +18,14 @@ status = (
     ('mutual', 'mutual'),
 )
 
+class Profile(models.Model):
+    username = models.CharField(max_length=255, blank=True)
+    name = models.CharField(max_length=255, blank=True)
+    profile_image = models.ImageField()
+
+
+    def __str__(self):
+        return self.username
 
 class RelationShip(models.Model):
     follow = models.ForeignKey(User, related_name='follow')             #admin
