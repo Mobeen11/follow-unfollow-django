@@ -241,7 +241,7 @@ STATIC_URL = '/static/'
 
 
 STATIC_ROOT = os.path.join(os.path.dirname(BASE_DIR), "static")
-print(STATIC_ROOT)
+# print(STATIC_ROOT)
 
 # error in static files
 STATICFILES_DIR = (
