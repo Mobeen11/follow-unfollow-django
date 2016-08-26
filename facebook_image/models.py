@@ -15,7 +15,7 @@ class Profile(models.Model):
     name = models.CharField(max_length=255, blank=True)
     link = models.CharField(max_length=255, blank=True)
     profile_image = models.ImageField()
-    new_profile_image = models.ImageField(blank=True)
+    new_profile_image = models.ImageField(blank=True, upload_to='profile_images')
 
 
     def __str__(self):
@@ -38,13 +38,13 @@ class FacebookStatus(models.Model):
     author = models.ForeignKey(User, null=True, blank=True, related_name="user_profile_facebook")
     message = models.TextField(max_length=255)
     link = models.URLField(null=True, blank=True)
-    new_image = models.ImageField(blank=True)
+    new_image = models.ImageField(blank=True, upload_to='facebookstatus_images')
 
     def __str__(self):
         return self.message
 
 class ImagesList(models.Model):
-    image = models.ImageField(blank=True)
+    image = models.ImageField(blank=True,  upload_to='imageslist')
     # image_name = models.CharField(max_length=255, null=True, blank=True)
 
     def __str__(self):
