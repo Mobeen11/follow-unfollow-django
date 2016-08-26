@@ -10,5 +10,6 @@ urlpatterns = [
     url(r'^test/$', 'facebook_image.views.test', name='test'),
     url(r'^save/$', 'facebook_image.views.save', name='save'),
     url(r'^share/$', 'facebook_image.views.share_post', name='share'),
+    url(r'^tweet/$', 'facebook_image.views.tweet', name='tweet'),
 
 ]+ static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

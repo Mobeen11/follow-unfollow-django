@@ -87,38 +87,39 @@
                 <li><a href="/logout" id='btn_3'>Logout</a></li>
 
             </ul>
-{#            <a href="/login/facebook" id='btn_5' >Login with Facebook</a>#}
         </nav><!-- /nav -->
 
         <div id="effect-1" class="effects clearfix">
+
             {% for i in images_display %}
             <div class="img">
                 <img src="{{ i.image.url }}" class="img-textual">
-
             </div>
             {% endfor %}
-            <div class="img">
-                <img src="{{ x }}" alt="" class="img-textual">
-
-            </div>
-            <div class="img">
-                <img src="{% static 'img/new4.png' %}" alt="" class="img-textual">
-
-            </div>
-
-            <div class="img">
-                <img src="{% static 'img/new7.png' %}"alt="" class="img-textual">
-
-            </div>
+{#            <div class="img">#}
+{#                <img src="{{ images_display.image }}" alt="" class="img-textual">#}
+{##}
+{#            </div>#}
+{#            <div class="img">#}
+{#                <img src="{% static 'img/new4.png' %}" alt="" class="img-textual">#}
+{##}
+{#            </div>#}
+{##}
+{#            <div class="img">#}
+{#                <img src="{% static 'img/new7.png' %}"alt="" class="img-textual">#}
+{##}
+{#            </div>#}
 
 
         </div>
-        
+
 
     </div><!-- /.container -->
     <br/><br/>
     <div class="container masking-image-wrap">
 
+
+        {# for facebook       #}
         <div class="img">
 {#            {% if profile.username %}#}
                 {{ profile.name }}
@@ -127,16 +128,30 @@
 
                         <img src="{% static 'img/trans.png' %}" id="mask-image" width='255' height='230'>
                 </div>
-
-
-
 {#            {% else %}#}
 {#                <h1>NOT LOGGED IN</h1>#}
 {#            {% endif %}#}
         </div>
-        <a href="/save/" id='btn_5'>Save Image</a>
-        <a href="/share/" id='btn_5'>SHARE</a>
-{#        <img src="/static/img/1.png" >#}
+
+            {# for twitter       #}
+{#         <div class="img">#}
+{#            {% if profile.username %}#}
+{#                {{ profile.name }}#}
+{#                <img src="{{ image.url }}" class='imgchange' alt="" width='255' height='230'>#}
+{#                <div class="img-overlay-mask">#}
+{##}
+{#                        <img src="{% static 'img/trans.png' %}" id="mask-image" width='255' height='230'>#}
+{#                </div>#}
+{#            {% else %}#}
+{#                <h1>NOT LOGGED IN</h1>#}
+{#            {% endif %}#}
+{#        </div>#}
+
+        <a  class="container" href="/save/" id='btn_5'>Save Image</a>
+        <a class="container" href="/share/" id='btn_5'>SHARE</a>
+        <a class="container" href="/tweet/" id='btn_5'>Tweet</a>
+
+
 
     </div>
 </div><!-- #main -->

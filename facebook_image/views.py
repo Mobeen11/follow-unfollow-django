@@ -27,15 +27,14 @@ def logout_view(request):
     logout(request)
     return redirect('test')
 
+
 def test(request):
-    # profile = Profile.objects.all()
-    # profile_image = profile.profile_image
-    # context = {'profile_img': profile_image}
+
     images = ImagesList.objects.all()
     print "images: ", images
     for i in images:
-        print "i: ", i.image
-    x = i.image
+        print "i: ", i.image.url
+
     print "this is view"
     user  = request.user
     if user.is_authenticated():
@@ -50,31 +49,50 @@ def test(request):
             'profile': profile,
             'image': profile.profile_image,
             'images_display': images,
-            'x': x,
         }
 
     else:
         print "user doesn't exist"
-        context = {}
+        context = {'images_display': images,}
     return render(request, 'facebook_image/practice.html', context)
 
 
 def save(request):
     user = request.user
     profile = Profile.objects.get(username=user)
-    print "image is start"
+    print "image is start", profile.profile_image
     # had to change the path dynamically
     # background = Image.open('static/test/mubeenyousaf78952f92d6904ad3-social.png')
-    background = Image.open(profile.profile_image)
-    # change the file name accordingly
-    foreground = Image.open("static/img/new1.png")
-    foreground = foreground.resize((50, 50))
+    # background = Image.open(profile.profile_image)
+    # change the file name accordingl
+    # background = Image.open('static/test/mubeenyousaf78952f92d6904ad3-social.png')
 
-    background.paste(foreground, (0, 0), foreground)
-    background.show()
+
+    images = ImagesList.objects.all()
+    for i in images:
+        facebook_img = FacebookStatus()
+        background = Image.open(profile.profile_image)
+        background = background.resize((255, 230))
+        # change the file name accordingly
+        foreground = Image.open(i.image)
+        foreground = foreground.resize((250, 230))
+
+        background.paste(foreground, (0, 0), foreground)
+
+        facebook_img.new_image.save("background" + '.png', File(open('new_img.png')))
+        facebook_img.STATUS = "Approved"
+        facebook_img.author = request.user
+        facebook_img.message = "this is message post"
+        facebook_img.link = "https://followunfollow.herokuapp.com"+facebook_img.new_image.url
+        facebook_img.save()
+        background.show()
+
+        # facebook_img.objects.create(STATUS="Approved", author=request.user, message="this is image", link= , new_image=)
+
+
     background.save('new_img.png',"PNG")
 
-    profile.new_profile_image.save("background"+ '.png', File(open('new_img.png')))
+    # profile.new_profile_image.save("background"+ '.png', File(open('new_img.png')))
     print "image is done"
     profile.save()
     print "this is image: ",  profile.new_profile_image
@@ -111,7 +129,47 @@ def tweet(request):
                    'HISKYRsVumzfw29OsuO6uemJY',
                    '2sUI8VMPSaYpma1wQeQn6GSKP9o08uQAbtYQH5JAhIufWPT4Xv')
         )
-    pass
+    examples = {}
+    examples["twurl"] = "twurl -H upload.twitter.com \"/1.1/media/upload.json\" -f /path/to/file -F media -X POST"
+    examples["python"] = """
+        import twitter
+    api = twitter.Api(
+        base_url='https://api.twitter.com/1.1',
+        consumer_key='YOUR_CONSUMER_KEY',
+        consumer_secret='YOUR_CONSUMER_SECRET',
+        access_token_key='YOUR_ACCESS_KEY',
+        access_token_secret='YOUR_ACCESS_SECRET')
+
+    url = '%s/media/upload.json' % api.upload_url
+    data = {}
+    data['media'] = open(str("/path/to/file"), 'rb').read()
+    response = api._RequestUrl(url, 'POST', data=data)
+    """
+
+    examples["nodejs"] = """
+    var Twit = require('twit')
+    var fs = require('fs')
+    var T = new Twit({
+        consumer_key:         'YOUR_CONSUMER_KEY'
+      , consumer_secret:      'YOUR_CONSUMER_SECRET'
+      , access_token:         'YOUR_ACCESS_KEY'
+      , access_token_secret:  'YOUR_ACCESS_SECRET'
+    })
+    var b64content = fs.readFileSync('/path/to/img', { encoding: 'base64' })
+    // first we must post the media to Twitter
+    T.post('media/upload', { media_data: b64content }, function (err, data, response) {
+      // now we can reference the media and post a tweet (media will attach to the tweet)
+      var mediaIdStr = data.media_id_string
+      var params = { status: 'Tweet with a photo!', media_ids: [mediaIdStr] }
+      T.post('statuses/update', params, function (err, data, response) {
+        console.log(data)
+      })
+    })
+    """
+
+    return redirect('/test/')
+
+    # pass
 
 
 

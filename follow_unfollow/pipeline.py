@@ -63,6 +63,13 @@ def save_profile(backend, user, response, *args, **kwargs):
             print "user already exist"
         else:
             print "this is facebook"
+            user_profile = User.objects.filter(username=user)
+            print "user_profile: ", user_profile
+
+
+
+            profile.author = user_profile
+            print " profile.author",  profile.author
             url = 'http://graph.facebook.com/{0}/picture'.format(response['id'])
             profile.profile_image = url
             profile.username = user
