@@ -124,9 +124,30 @@ def save(request):
 
 #share image on facebook
 def share_post(request):
+    print "this is error"
+    user = request.user
     user = User.objects.get(username=request.user.username)
     print "user: ", user
-    statuses = FacebookStatus.objects.filter(author=user)[:1]  # We only need one status for this test
+    fb_profile = FacebookStatus.objects.filter(username=user)
+    print "fb_profile: ", fb_profile
+    images = ImagesList.objects.all()
+    for i in images:
+        facebook_img = FacebookStatus()
+        for fb in fb_profile:
+            print "this is fb profile"
+            background = Image.open(fb.profile_image)
+            background = background.resize((255, 230))
+            # change the file name accordingly
+            foreground = Image.open(i.image)
+            foreground = foreground.resize((250, 230))
+            background.paste(foreground, (0, 0), foreground)
+            facebook_img.new_image.save("background" + '.png', File(open(fb.profile_image.url)))
+            facebook_img.link = "https://followunfollow.herokuapp.com"+facebook_img.new_image.url
+            facebook_img.save()
+            background.show()
+
+
+    statuses = FacebookStatus.objects.filter(username=user)[:1]  # We only need one status for this test
 
     print "statuses: ", statuses
     status = statuses[0]
@@ -134,7 +155,7 @@ def share_post(request):
     print "auth: ", auth.extra_data['access_token']
     graph = facebook.GraphAPI(auth.extra_data['access_token'])
     graph.put_object('me', 'feed', link=status.link)
-    status.publish_timestamp = datetime.datetime.now()
+    # status.publish_timestamp = datetime.datetime.now()
     status.save()
 
     return redirect('test')
