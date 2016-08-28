@@ -240,7 +240,8 @@ BASE_DIR = os.path.dirname(os.path.abspath(__file__)) #+ '/..'
 STATIC_URL = '/static/'
 
 
-STATIC_ROOT = os.path.join(os.path.dirname(BASE_DIR), "static")
+# STATIC_ROOT = os.path.join(os.path.dirname(BASE_DIR), "static")
+STATIC_ROOT = "E:/Git Parent/follow/follow-prog-2/static"
 # print(STATIC_ROOT)
 
 # error in static files
@@ -252,8 +253,9 @@ STATICFILES_DIR = (
 
 
 MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.join(os.path.dirname(BASE_DIR),"media")
+# MEDIA_ROOT = os.path.join(os.path.dirname(BASE_DIR),"media")
 
+MEDIA_ROOT = 'follow/follow-prog-2/media'
 
 SOCIAL_AUTH_LOGIN_REDIRECT_URL = '/test/'
 LOGIN_ERROR_URL    = '/login-error/'

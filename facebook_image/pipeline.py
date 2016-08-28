@@ -49,44 +49,47 @@ def save_profile(backend, user, response, *args, **kwargs):
     print "args: ", args
     print "kargs: ", kwargs
     profile = Profile()
+    twitter_obj = TwitterStatus()
+    facebook_obj = FacebookStatus()
 
 
     if backend.name == 'twitter':
-        profile1 = Profile.objects.filter(username=user)
-        if profile1:
+        twitter_profile = TwitterStatus.objects.filter(username=user)
+        if twitter_profile:
             print "user already exist"
         else:
             image_url = response['profile_image_url_https']
-            profile.profile_image = image_url
-            profile.username = user
+            avatar = urlopen(image_url)
+
+            twitter_obj.profile_image.save(slugify(user.username) + '.png',
+                        ContentFile(avatar.read()))
+            twitter_obj.link = image_url
+            twitter_obj.username = user.username
+            twitter_obj.fullname = kwargs['details']['fullname']
             print "image_url: ", image_url
-            profile.save()
+            print "fullname: ", kwargs['details']['fullname']
+            twitter_obj.save()
+            print "that is twitter user"
+
     if backend.name == 'facebook':
-        profile1 = Profile.objects.filter(username=user)
-        if profile1:
+        facebook_profile = FacebookStatus.objects.filter(username=user)
+        if facebook_profile:
             print "user already exist"
         else:
             print "this is facebook"
             url = 'http://graph.facebook.com/{0}/picture'.format(response['id'])
-            profile.link = url
-
-            # profile.profile_image = url
-            print "this s"
+            facebook_obj.link = url
             avatar = urlopen(url)
-            profile.profile_image.save(slugify(user.username) + '.png',
+            facebook_obj.profile_image.save(slugify(user.username) + '.png',
                         ContentFile(avatar.read()))
-
-
-            print "that is"
-
-            profile.username = user.username
+            facebook_obj.username = user.username
             fb_username = kwargs['details']['username']
-            profile.name = fb_username
+            facebook_obj.fullname = fb_username
 
             print "image_url: ", url
             print "username: ", fb_username
-            profile.save()
-
+            facebook_obj.save()
+            print "that is facebook user"
         # print "image main start"
         # background = Image.open('mubeenyousaf78952f92d6904ad3.png')
         # foreground = Image.open("new1.png")

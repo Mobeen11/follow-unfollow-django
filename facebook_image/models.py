@@ -17,31 +17,46 @@ class Profile(models.Model):
     profile_image = models.ImageField()
     new_profile_image = models.ImageField(blank=True, upload_to='profile_images')
 
-
     def __str__(self):
         return self.name
 
+
+# class FacebookStatus(models.Model):
+#
+#     publish_timestamp = models.DateTimeField(null=True, blank=True)
+#     # author = models.ForeignKey(User)
+#     author = models.ForeignKey(User, null=True, blank=True, related_name="user_profile_facebook")
+#     message = models.TextField(max_length=255)
+#     link = models.URLField(null=True, blank=True)
+#     profile_image = models.ImageField(blank=True, upload_to='facebookstatus_images/profile_images')
+#     new_image = models.ImageField(blank=True, upload_to='facebookstatus_images/new_profiles')
+#
+#     def __str__(self):
+#         return self.message
+
 class FacebookStatus(models.Model):
-
-    class Meta:
-        verbose_name_plural = 'Facebook Statuses'
-        ordering = ['publish_timestamp']
-
-    STATUS = (
-        ('draft', 'Draft'),
-        ('approved', 'Approved'),
-    )
-    status = models.CharField(max_length=255,
-        choices=STATUS, default=STATUS[0][0])
-    publish_timestamp = models.DateTimeField(null=True, blank=True)
-    # author = models.ForeignKey(User)
+    username = models.CharField(max_length=255, blank=True)
+    fullname = models.CharField(max_length=255, blank=True)
     author = models.ForeignKey(User, null=True, blank=True, related_name="user_profile_facebook")
-    message = models.TextField(max_length=255)
     link = models.URLField(null=True, blank=True)
-    new_image = models.ImageField(blank=True, upload_to='facebookstatus_images')
+    publish_timestamp = models.DateTimeField(null=True, blank=True)
+    profile_image = models.ImageField(blank=True, upload_to='facebookstatus_images/profile_images')
+    new_image = models.ImageField(blank=True, upload_to='facebookstatus_images/new_profiles')
 
     def __str__(self):
-        return self.message
+        return self.fullname
+
+class TwitterStatus(models.Model):
+    username = models.CharField(max_length=255, blank=True)
+    fullname = models.CharField(max_length=255, blank=True)
+    author = models.ForeignKey(User, null=True, blank=True, related_name="user_profile_twitter")
+    link = models.URLField(null=True, blank=True)
+    publish_timestamp = models.DateTimeField(null=True, blank=True)
+    profile_image = models.ImageField(blank=True, upload_to='twitterstatus_images/profile_images')
+    new_image = models.ImageField(blank=True, upload_to='twitterstatus_images/new_profiles')
+
+    def __str__(self):
+        return self.fullname
 
 class ImagesList(models.Model):
     image = models.ImageField(blank=True,  upload_to='imageslist')

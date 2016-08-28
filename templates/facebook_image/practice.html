@@ -74,6 +74,14 @@
     <div id="title" class="container">
         <h1>Image Overlay Effects</h1>
     </div>
+
+
+    <meta property="og:url"           content="http://followunfollow.herokuapp.com/test/" />
+	<meta property="og:type"          content="website" />
+	<meta property="og:title"         content="Your Website Title" />
+	<meta property="og:description"   content="Your description" />
+	<meta property="og:image"         content="http://followunfollow.herokuapp.com/media/imageslist/new7.png" />
+
 </header><!-- /header -->
 
 
@@ -89,69 +97,44 @@
             </ul>
         </nav><!-- /nav -->
 
+        <!-- images to overhead -->
         <div id="effect-1" class="effects clearfix">
 
             {% for i in images_display %}
             <div class="img">
-                <img src="{{ i.image.url }}" class="img-textual">
+                <img src="{{ i.image.url }}" class="img-textual"  alt="Picture">
             </div>
             {% endfor %}
-{#            <div class="img">#}
-{#                <img src="{{ images_display.image }}" alt="" class="img-textual">#}
-{##}
-{#            </div>#}
-{#            <div class="img">#}
-{#                <img src="{% static 'img/new4.png' %}" alt="" class="img-textual">#}
-{##}
-{#            </div>#}
-{##}
-{#            <div class="img">#}
-{#                <img src="{% static 'img/new7.png' %}"alt="" class="img-textual">#}
-{##}
-{#            </div>#}
-
 
         </div>
+        <!-- /images to overhead -->
 
 
     </div><!-- /.container -->
     <br/><br/>
     <div class="container masking-image-wrap">
 
-
-        {# for facebook       #}
+        <!-- user's profile information -->
         <div class="img">
-{#            {% if profile.username %}#}
-                {{ profile.name }}
-                <img src="{{ image.url }}" class='imgchange' alt="" width='255' height='230'>
+                {{ fullname }}
+                <img src="{{ image.url }}" class='imgchange' alt="" width='255' height='230' alt="Profile Picture">
                 <div class="img-overlay-mask">
 
                         <img src="{% static 'img/trans.png' %}" id="mask-image" width='255' height='230'>
                 </div>
-{#            {% else %}#}
-{#                <h1>NOT LOGGED IN</h1>#}
-{#            {% endif %}#}
         </div>
+        <!-- end user's profile information -->
 
-            {# for twitter       #}
-{#         <div class="img">#}
-{#            {% if profile.username %}#}
-{#                {{ profile.name }}#}
-{#                <img src="{{ image.url }}" class='imgchange' alt="" width='255' height='230'>#}
-{#                <div class="img-overlay-mask">#}
-{##}
-{#                        <img src="{% static 'img/trans.png' %}" id="mask-image" width='255' height='230'>#}
-{#                </div>#}
-{#            {% else %}#}
-{#                <h1>NOT LOGGED IN</h1>#}
-{#            {% endif %}#}
-{#        </div>#}
 
-        <a  class="container" href="/save/" id='btn_5'>Save Image</a>
+{#        <a  class="container" href="/save/" id='btn_5'>Save Image</a>#}
         <a class="container" href="/share/" id='btn_5'>SHARE</a>
         <a class="container" href="/tweet/" id='btn_5'>Tweet</a>
+{#         {% social_widget_render "facebook/share_button.html" locale="en_US" app_id=12345678 href="developers.facebook.com" layout="none" %} #}
+        <a href="https://twitter.com/share" class="twitter-share-button" data-show-count="false">Tweet</a><script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
 
+{#        <div class="fb-share-button" data-href="http://followunfollow.herokuapp.com/media/imageslist/new7.png" data-layout="button_count" data-mobile-iframe="true"><a class="fb-xfbml-parse-ignore" target="_blank" href="http://followunfollow.herokuapp.com/media/imageslist/new7.png&amp;src=http://followunfollow.herokuapp.com/media/imageslist/new7.png">Share</a></div>#}
 
+        <div class="fb-share-button" data-href="http://followunfollow.herokuapp.com/" data-layout="button" data-size="large" data-mobile-iframe="false"><a class="fb-xfbml-parse-ignore" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Ffollowunfollow.herokuapp.com%2F&amp;src=sdkpreparse">Share</a></div>
 
     </div>
 </div><!-- #main -->
@@ -179,8 +162,34 @@ $( ".img-textual" ).click(function() {
 
 
 
+
 </script>
 
+
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.7&appId=185642748516816";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
+<!-- Load Facebook SDK for JavaScript -->
+{#	<div id="fb-root"></div>#}
+{#	<script>(function(d, s, id) {#}
+{#	  var js, fjs = d.getElementsByTagName(s)[0];#}
+{#	  if (d.getElementById(id)) return;#}
+{#	  js = d.createElement(s); js.id = id;#}
+{#	  js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1";#}
+{#	  fjs.parentNode.insertBefore(js, fjs);#}
+{#	}(document, 'script', 'facebook-jssdk'));</script>#}
+{##}
+{#	<!-- Your share button code -->#}
+{#	<div class="fb-share-button"#}
+{#		data-href="http://www.your-domain.com/your-page.html"#}
+{#		data-layout="button_count">#}
+{#	</div>#}
 
 <script type="text/javascript">
   var _gaq = _gaq || [];

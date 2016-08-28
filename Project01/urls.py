@@ -12,16 +12,31 @@ urlpatterns = patterns('',
     # url(r'^blog/', include('blog.urls')),
     url('', include('social.apps.django_app.urls', namespace='social')),
     url('', include('django.contrib.auth.urls', namespace='auth')),
+    # url(r'^twitter/', include('twitter_users.urls')),
     url(r'^admin/', include(admin.site.urls)),
     url(r'', include('follow_unfollow.urls')),
     url(r'', include('facebook_image.urls')),
     url(r'^tinymce/', include('tinymce.urls')),
 
 
-)+ static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+)
 if settings.DEBUG:
-    urlpatterns += patterns(
-        '',
-        url(r'^media/(?P<path>.*)$', 'django.views.static.serve',
-            {'document_root': settings.MEDIA_ROOT, 'show_indexes': True}),
-    )
+    urlpatterns += patterns('',
+        url(r'^media/(?P<path>.*)$', 'django.views.static.serve', {
+            'document_root': settings.MEDIA_ROOT,
+        }),
+        url(r'^static/(?P<path>.*)$', 'django.views.static.serve', {
+            'document_root': settings.STATIC_ROOT,
+        }),
+)
+# if settings.DEBUG:
+#     urlpatterns += patterns(
+#         '',
+#         url(r'^media/(?P<path>.*)$', 'django.views.static.serve',
+#             {'document_root': settings.MEDIA_ROOT, 'show_indexes': True}),
+#     )
+# if settings.DEBUG:
+#     # static files (images, css, javascript, etc.)
+#     urlpatterns += patterns('',
+#         (r'^media/(?P<path>.*)$', 'django.views.static.serve', {
+#         'document_root': settings.MEDIA_ROOT}))

@@ -9,7 +9,7 @@ from django.core.files.base import ContentFile
 from django.core.files import File
 import datetime
 import facebook
-
+from twitter import *
 
 
 def home(request):
@@ -36,27 +36,47 @@ def test(request):
         print "i: ", i.image.url
 
     print "this is view"
-    user  = request.user
+    user = request.user
     if user.is_authenticated():
         print "user: ", user
-        profile = Profile.objects.get(username=user)
-        print "profile: ", profile.profile_image
+        twitter_profile = TwitterStatus.objects.filter(username=user)
+        facebook_profile = FacebookStatus.objects.filter(username=user)
 
+        if twitter_profile:
+            print "user is from twitter"
+            for tw in twitter_profile:
+                fullname = tw.fullname
+                profile_image = tw.profile_image
+                print "profile: ", tw.profile_image.url
+                context = {
 
-        context = {
-            # 'image': profile.profile_image,
-            # 'username': profile.username,
-            'profile': profile,
-            'image': profile.profile_image,
-            'images_display': images,
-        }
+                    'fullname': fullname,
+                    # 'profile': twitter_profile,
+                    'image': tw.profile_image,
+                    'images_display': images,
+                }
+
+        if facebook_profile:
+            print "user is from facebook"
+            for fb in facebook_profile:
+
+                fullname = fb.fullname
+                profile_image = fb.profile_image
+                print "profile: ", fb.profile_image.url
+                context = {
+                    'fullname': fullname,
+                    # 'profile': twitter_profile,
+                    'image': fb.profile_image,
+                    'images_display': images,
+                }
 
     else:
         print "user doesn't exist"
-        context = {'images_display': images,}
+        context = {'images_display': images, }
     return render(request, 'facebook_image/practice.html', context)
 
 
+# not applied
 def save(request):
     user = request.user
     profile = Profile.objects.get(username=user)
@@ -121,7 +141,8 @@ def share_post(request):
 
     return redirect('test')
 
-from twitter import *
+
+
 def tweet(request):
     t = Twitter(
         auth=OAuth('HISKYRsVumzfw29OsuO6uemJY',
