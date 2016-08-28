@@ -60,7 +60,6 @@ class TwitterStatus(models.Model):
 
 class ImagesList(models.Model):
     image = models.ImageField(blank=True,  upload_to='imageslist')
-    # image_name = models.CharField(max_length=255, null=True, blank=True)
 
     def __str__(self):
         return str(self.image)

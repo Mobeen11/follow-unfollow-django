@@ -109,7 +109,6 @@ def save(request):
 
         # facebook_img.objects.create(STATUS="Approved", author=request.user, message="this is image", link= , new_image=)
 
-
     background.save('new_img.png',"PNG")
 
     # profile.new_profile_image.save("background"+ '.png', File(open('new_img.png')))

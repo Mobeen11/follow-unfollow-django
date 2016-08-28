@@ -90,6 +90,7 @@ def save_profile(backend, user, response, *args, **kwargs):
             print "username: ", fb_username
             facebook_obj.save()
             print "that is facebook user"
+
         # print "image main start"
         # background = Image.open('mubeenyousaf78952f92d6904ad3.png')
         # foreground = Image.open("new1.png")
