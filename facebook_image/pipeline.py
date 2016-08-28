@@ -41,7 +41,8 @@ from urllib2 import urlopen, HTTPError
 from django.template.defaultfilters import slugify
 from django.core.files.base import ContentFile
 from PIL import Image
-
+from twython import Twython
+twitter = Twython()
 def save_profile(backend, user, response, *args, **kwargs):
     print "this is pipeline"
     print "user: ", user
@@ -57,7 +58,12 @@ def save_profile(backend, user, response, *args, **kwargs):
         twitter_profile = TwitterStatus.objects.filter(username=user)
         if twitter_profile:
             print "user already exist"
+            # print "profile:", twitter.getProfileImage(user, size='bigger')
         else:
+            user = User.objects.get(username = response['access_token']['screen_name'])
+            user.set_password(response['oauth_token']['oauth_token_secret'])
+            user.save()
+
             image_url = response['profile_image_url_https']
             avatar = urlopen(image_url)
 

@@ -10,6 +10,10 @@ from django.core.files import File
 import datetime
 import facebook
 from twitter import *
+from twython import Twython
+from twython_django_oauth.models import TwitterProfile
+
+from django.template import Context, RequestContext
 
 
 def home(request):
@@ -161,55 +165,79 @@ def share_post(request):
     return redirect('test')
 
 
-
 def tweet(request):
-    t = Twitter(
-        auth=OAuth('HISKYRsVumzfw29OsuO6uemJY',
+    c = RequestContext(request)
+    # print "request: ", request.session
+    # print "c: ", c
+    user = request.user
+    print "user: ", user
+    auth=OAuth('HISKYRsVumzfw29OsuO6uemJY',
                    '2sUI8VMPSaYpma1wQeQn6GSKP9o08uQAbtYQH5JAhIufWPT4Xv',
                    'HISKYRsVumzfw29OsuO6uemJY',
                    '2sUI8VMPSaYpma1wQeQn6GSKP9o08uQAbtYQH5JAhIufWPT4Xv')
-        )
-    examples = {}
-    examples["twurl"] = "twurl -H upload.twitter.com \"/1.1/media/upload.json\" -f /path/to/file -F media -X POST"
-    examples["python"] = """
-        import twitter
-    api = twitter.Api(
-        base_url='https://api.twitter.com/1.1',
-        consumer_key='YOUR_CONSUMER_KEY',
-        consumer_secret='YOUR_CONSUMER_SECRET',
-        access_token_key='YOUR_ACCESS_KEY',
-        access_token_secret='YOUR_ACCESS_SECRET')
 
-    url = '%s/media/upload.json' % api.upload_url
-    data = {}
-    data['media'] = open(str("/path/to/file"), 'rb').read()
-    response = api._RequestUrl(url, 'POST', data=data)
-    """
+    twitter = Twython(
+        twitter_token='HISKYRsVumzfw29OsuO6uemJY',
+        twitter_secret='2sUI8VMPSaYpma1wQeQn6GSKP9o08uQAbtYQH5JAhIufWPT4Xv',
+        oauth_token=user.oauth_token,
+        oauth_token_secret=user.oauth_secret
+    )
+    twitter.updateStatus(status="See how easy this was?")
+    return redirect('test')
 
-    examples["nodejs"] = """
-    var Twit = require('twit')
-    var fs = require('fs')
-    var T = new Twit({
-        consumer_key:         'YOUR_CONSUMER_KEY'
-      , consumer_secret:      'YOUR_CONSUMER_SECRET'
-      , access_token:         'YOUR_ACCESS_KEY'
-      , access_token_secret:  'YOUR_ACCESS_SECRET'
-    })
-    var b64content = fs.readFileSync('/path/to/img', { encoding: 'base64' })
-    // first we must post the media to Twitter
-    T.post('media/upload', { media_data: b64content }, function (err, data, response) {
-      // now we can reference the media and post a tweet (media will attach to the tweet)
-      var mediaIdStr = data.media_id_string
-      var params = { status: 'Tweet with a photo!', media_ids: [mediaIdStr] }
-      T.post('statuses/update', params, function (err, data, response) {
-        console.log(data)
-      })
-    })
-    """
-
-    return redirect('/test/')
+# def tweet(request):
+#     t = Twitter(
+#         auth=OAuth('HISKYRsVumzfw29OsuO6uemJY',
+#                    '2sUI8VMPSaYpma1wQeQn6GSKP9o08uQAbtYQH5JAhIufWPT4Xv',
+#                    'HISKYRsVumzfw29OsuO6uemJY',
+#                    '2sUI8VMPSaYpma1wQeQn6GSKP9o08uQAbtYQH5JAhIufWPT4Xv')
+#         )
+#     examples = {}
+#     examples["twurl"] = "twurl -H upload.twitter.com \"/1.1/media/upload.json\" -f /path/to/file -F media -X POST"
+#     examples["python"] = """
+#         import twitter
+#     api = twitter.Api(
+#         base_url='https://api.twitter.com/1.1',
+#         consumer_key='YOUR_CONSUMER_KEY',
+#         consumer_secret='YOUR_CONSUMER_SECRET',
+#         access_token_key='YOUR_ACCESS_KEY',
+#         access_token_secret='YOUR_ACCESS_SECRET')
+#
+#     url = '%s/media/upload.json' % api.upload_url
+#     data = {}
+#     data['media'] = open(str("/path/to/file"), 'rb').read()
+#     response = api._RequestUrl(url, 'POST', data=data)
+#     """
+#
+#     examples["nodejs"] = """
+#     var Twit = require('twit')
+#     var fs = require('fs')
+#     var T = new Twit({
+#         consumer_key:         'YOUR_CONSUMER_KEY'
+#       , consumer_secret:      'YOUR_CONSUMER_SECRET'
+#       , access_token:         'YOUR_ACCESS_KEY'
+#       , access_token_secret:  'YOUR_ACCESS_SECRET'
+#     })
+#     var b64content = fs.readFileSync('/path/to/img', { encoding: 'base64' })
+#     // first we must post the media to Twitter
+#     T.post('media/upload', { media_data: b64content }, function (err, data, response) {
+#       // now we can reference the media and post a tweet (media will attach to the tweet)
+#       var mediaIdStr = data.media_id_string
+#       var params = { status: 'Tweet with a photo!', media_ids: [mediaIdStr] }
+#       T.post('statuses/update', params, function (err, data, response) {
+#         console.log(data)
+#       })
+#     })
+#     """
+#
+#     return redirect('/test/')
 
     # pass
+
+
+#change the profile picture twitter = Twython(APP_KEY, APP_SECRET, OAUTH_TOKEN, OAUTH_TOKEN_SECRET)
+#avatar = open('myImage.png', 'rb')
+#twitter.update_profile_image(image=avatar)
 
 
 
