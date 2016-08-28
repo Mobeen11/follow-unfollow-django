@@ -49,7 +49,6 @@ def test(request):
                 profile_image = tw.profile_image
                 print "profile: ", tw.profile_image.url
                 context = {
-
                     'fullname': fullname,
                     # 'profile': twitter_profile,
                     'image': tw.profile_image,
