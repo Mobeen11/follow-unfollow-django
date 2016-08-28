@@ -246,15 +246,17 @@ STATIC_ROOT = "E:/Git Parent/follow/follow-prog-2/static"
 
 # error in static files
 STATICFILES_DIR = (
-    os.path.join(os.path.dirname(BASE_DIR), "static")
+    os.path.join(os.path.dirname(BASE_DIR), "static"),
+    # '/var/www/followunfollow.herokuapp.com/static/',
     # '/Users/Admin/Desktop/djangoProjects/follow-prog-2/static'
+
 )
 # STATIC_ROOT = os.path.join(os.path.dirname(BASE_DIR), "static")
 
 MEDIA_URL = '/media/'
-# MEDIA_ROOT = os.path.join(os.path.dirname(BASE_DIR),"media")
+MEDIA_ROOT = os.path.join(os.path.dirname(BASE_DIR),"media")
 
-MEDIA_ROOT = 'follow/follow-prog-2/media'
+# MEDIA_ROOT = 'follow/follow-prog-2/media'
 
 SOCIAL_AUTH_LOGIN_REDIRECT_URL = '/test/'
 LOGIN_ERROR_URL    = '/login-error/'
