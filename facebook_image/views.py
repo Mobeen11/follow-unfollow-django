@@ -37,10 +37,11 @@ def logout_view(request):
 
 
 def test(request):
+    context = {}
     images = ImagesList.objects.all()
     print "images: ", images
-    for i in images:
-        print "i: ", i.image.url
+    # for i in images:
+    #     print "i: ", i.image.url
 
     print "this is view"
     user = request.user
