@@ -9,8 +9,10 @@ urlpatterns = [
     url(r'^logout/$', 'facebook_image.views.logout_view', name='logout'),
     url(r'^test/$', 'facebook_image.views.test', name='test'),
     url(r'^save/$', 'facebook_image.views.save', name='save'),
-    url(r'^share/$', 'facebook_image.views.share_post', name='share'),
-    url(r'^tweet/$', 'facebook_image.views.tweet', name='tweet'),
+    url(r'^share/(?P<pk>\d+)/$', 'facebook_image.views.share_post', name='share'),
+    # url(r'^share/$', 'facebook_image.views.share_post', name='share'),
+    # url(r'^tweet/$', 'facebook_image.views.tweet', name='tweet'),
+    url(r'^tweet/(?P<pk>\d+)$', 'facebook_image.views.tweet', name='tweet'),
 
 ]+ static(settings.STATIC_URL, document_root=settings.STATIC_ROOT) + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 

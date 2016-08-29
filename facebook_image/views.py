@@ -9,8 +9,12 @@ from django.core.files.base import ContentFile
 from django.core.files import File
 import datetime
 import facebook
+import urllib
+from urlparse import urlparse
+from twitter import *
 from twitter import *
 from twython import Twython
+
 from twython_django_oauth.models import TwitterProfile
 
 from django.template import Context, RequestContext
@@ -22,10 +26,11 @@ def home(request):
         return redirect('done')
     return render(request, 'facebook_image/home.html')
 
+
 @login_required
 def done(request):
-
     return render(request, "facebook_image/done.html", {})
+
 
 def logout_view(request):
     logout(request)
@@ -33,7 +38,6 @@ def logout_view(request):
 
 
 def test(request):
-
     images = ImagesList.objects.all()
     print "images: ", images
     for i in images:
@@ -45,7 +49,6 @@ def test(request):
         print "user: ", user
         twitter_profile = TwitterStatus.objects.filter(username=user)
         facebook_profile = FacebookStatus.objects.filter(username=user)
-
         if twitter_profile:
             print "user is from twitter"
             for tw in twitter_profile:
@@ -102,13 +105,15 @@ def save(request):
 
         background.paste(foreground, (0, 0), foreground)
 
-        facebook_img.new_image.save("background" + '.png', File(open('new_img.png')))
+        # image_url = 'http://localhost:9090/media/'+background.url
+        background.save('static/test/background.png', "PNG")
+        facebook_img.new_image.save("background" + '.png', File(open('static/test/background.png')))
         facebook_img.STATUS = "Approved"
         facebook_img.author = request.user
         facebook_img.message = "this is message post"
-        facebook_img.link = "https://followunfollow.herokuapp.com"+facebook_img.new_image.url
+        facebook_img.link = "http://localhost:9090" + facebook_img.new_image.url
         facebook_img.save()
-        background.show()
+        print "image is saved: ", facebook_img.new_image.url
 
         # facebook_img.objects.create(STATUS="Approved", author=request.user, message="this is image", link= , new_image=)
 
@@ -116,25 +121,32 @@ def save(request):
 
     # profile.new_profile_image.save("background"+ '.png', File(open('new_img.png')))
     print "image is done"
-    profile.save()
-    print "this is image: ",  profile.new_profile_image
 
-    get_pic_profile = Profile.objects.get(username=user)
-    print get_pic_profile.new_profile_image
+    get_images = FacebookStatus.objects.filter(author=request.user)
+    print "get_image", get_images
+    for im in get_images:
+        print "im: ", im.new_image
+
     context = {
-        'image': get_pic_profile.new_profile_image,
+        'user_images': get_images,
+        'image': profile.profile_image,
     }
     return render(request, 'facebook_image/practice.html', context)
 
+
+# # share image on facebook
+# def share_post(request, pk):
+#     user = request.user
+#     user = User.objects.get(username=user.username)
 #share image on facebook
-def share_post(request):
+def share_post(request, pk):
     print "this is error"
     user = request.user
     user = User.objects.get(username=request.user.username)
     print "user: ", user
     fb_profile = FacebookStatus.objects.filter(username=user)
     print "fb_profile: ", fb_profile
-    images = ImagesList.objects.all()
+    images = ImagesList.objects.filter(pk=pk)
     for i in images:
         facebook_img = FacebookStatus()
         for fb in fb_profile:
@@ -145,9 +157,10 @@ def share_post(request):
             foreground = Image.open(i.image)
             foreground = foreground.resize((250, 230))
             background.paste(foreground, (0, 0), foreground)
-            facebook_img.new_image.save("background" + '.png', File(open(fb.profile_image.url)))
-            facebook_img.link = "https://followunfollow.herokuapp.com"+facebook_img.new_image.url
-            facebook_img.save()
+            background.save('static/test/background.png', "PNG")
+            fb.new_image.save("background" + '.png', File(open('static/test/background.png')))
+            fb.link = "https://followunfollow.herokuapp.com"+fb.new_image.url
+            fb.save()
             background.show()
 
 
@@ -159,31 +172,78 @@ def share_post(request):
     print "auth: ", auth.extra_data['access_token']
     graph = facebook.GraphAPI(auth.extra_data['access_token'])
     graph.put_object('me', 'feed', link=status.link)
+    print "link:",status.link
     # status.publish_timestamp = datetime.datetime.now()
     status.save()
 
     return redirect('test')
 
-
-def tweet(request):
+from TwitterAPI import TwitterAPI
+def tweet(request, pk):
     c = RequestContext(request)
     # print "request: ", request.session
     # print "c: ", c
     user = request.user
     print "user: ", user
-    auth=OAuth('HISKYRsVumzfw29OsuO6uemJY',
-                   '2sUI8VMPSaYpma1wQeQn6GSKP9o08uQAbtYQH5JAhIufWPT4Xv',
-                   'HISKYRsVumzfw29OsuO6uemJY',
-                   '2sUI8VMPSaYpma1wQeQn6GSKP9o08uQAbtYQH5JAhIufWPT4Xv')
+    CONSUMER_KEY = 'HISKYRsVumzfw29OsuO6uemJY'
+    CONSUMER_SECRET = '2sUI8VMPSaYpma1wQeQn6GSKP9o08uQAbtYQH5JAhIufWPT4Xv'
+    ACCESS_TOKEN_KEY = '587179393-0WzjoaIUP8hg45wmabvebNLErFHcTOTquh4HJyeQ'
+    ACCESS_TOKEN_SECRET = 'uu0uZiv3p1jkiFWcXBUrZh4fIpwkKbHeZHPRjcZia7dNA'
+    tw_profile = TwitterStatus.objects.filter(username=user)
+    images = ImagesList.objects.filter(pk=pk)
+    for i in images:
+        for tw in tw_profile:
+            print "this is tw profile"
+            background = Image.open(tw.profile_image)
+            background = background.resize((255, 230))
+            # change the file name accordingly
+            foreground = Image.open(i.image)
+            foreground = foreground.resize((250, 230))
+            background.paste(foreground, (0, 0), foreground)
+            background.save('static/test/background.png', "PNG")
+            tw.new_image.save("background" + '.png', File(open('static/test/background.png')))
+            tw.link = "https://followunfollow.herokuapp.com" + tw.new_image.url
+            tw.save()
 
-    twitter = Twython(
-        twitter_token='HISKYRsVumzfw29OsuO6uemJY',
-        twitter_secret='2sUI8VMPSaYpma1wQeQn6GSKP9o08uQAbtYQH5JAhIufWPT4Xv',
-        oauth_token=user.oauth_token,
-        oauth_token_secret=user.oauth_secret
-    )
-    twitter.updateStatus(status="See how easy this was?")
+            background.show()
+
+    statuses = TwitterStatus.objects.filter(username=user)[:1]
+    api = TwitterAPI(CONSUMER_KEY, CONSUMER_SECRET, ACCESS_TOKEN_KEY, ACCESS_TOKEN_SECRET)
+
+    status = statuses
+    print "status: ", status
+    for s in status:
+        print "in the loop"
+        file = open('static/test/background.png', 'rb')
+        data = file.read()
+        r = api.request('statuses/update_with_media', {'status': 'Your tweet'}, {'media[]': data})
     return redirect('test')
+
+
+
+
+
+
+
+# def tweet(request):
+#     c = RequestContext(request)
+#     # print "request: ", request.session
+#     # print "c: ", c
+#     user = request.user
+#     print "user: ", user
+#     auth=OAuth('HISKYRsVumzfw29OsuO6uemJY',
+#                    '2sUI8VMPSaYpma1wQeQn6GSKP9o08uQAbtYQH5JAhIufWPT4Xv',
+#                    'HISKYRsVumzfw29OsuO6uemJY',
+#                    '2sUI8VMPSaYpma1wQeQn6GSKP9o08uQAbtYQH5JAhIufWPT4Xv')
+#
+#     twitter = Twython(
+#         twitter_token='HISKYRsVumzfw29OsuO6uemJY',
+#         twitter_secret='2sUI8VMPSaYpma1wQeQn6GSKP9o08uQAbtYQH5JAhIufWPT4Xv',
+#         oauth_token=user.oauth_token,
+#         oauth_token_secret=user.oauth_secret
+#     )
+#     twitter.updateStatus(status="See how easy this was?")
+#     return redirect('test')
 
 # def tweet(request):
 #     t = Twitter(

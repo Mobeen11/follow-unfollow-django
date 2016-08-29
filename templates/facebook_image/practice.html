@@ -77,11 +77,11 @@
     </div>
 
 
-    <meta property="og:url"           content="http://followunfollow.herokuapp.com/test/" />
-	<meta property="og:type"          content="website" />
-	<meta property="og:title"         content="Your Website Title" />
-	<meta property="og:description"   content="Your description" />
-	<meta property="og:image"         content="http://followunfollow.herokuapp.com/media/imageslist/new7.png" />
+{#    <meta property="og:url"           content="http://followunfollow.herokuapp.com/test/" />#}
+{#	<meta property="og:type"          content="website" />#}
+{#	<meta property="og:title"         content="Your Website Title" />#}
+{#	<meta property="og:description"   content="Your description" />#}
+{#	<meta property="og:image"         content="http://followunfollow.herokuapp.com/media/imageslist/new7.png" />#}
 
 </header><!-- /header -->
 
@@ -128,14 +128,14 @@
 
 
 {#        <a  class="container" href="/save/" id='btn_5'>Save Image</a>#}
-        <a class="container" href="/share/" id='btn_5'>SHARE</a>
-        <a class="container" href="/tweet/" id='btn_5'>Tweet</a>
+        <a class="container" href="" id='share_btn'>SHARE</a>
+        <a class="container" href="/tweet/" id='tweet_btn'>Tweet</a>
 {#         {% social_widget_render "facebook/share_button.html" locale="en_US" app_id=12345678 href="developers.facebook.com" layout="none" %} #}
         <a href="https://twitter.com/share" class="twitter-share-button" data-show-count="false">Tweet</a><script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
 
 {#        <div class="fb-share-button" data-href="http://followunfollow.herokuapp.com/media/imageslist/new7.png" data-layout="button_count" data-mobile-iframe="true"><a class="fb-xfbml-parse-ignore" target="_blank" href="http://followunfollow.herokuapp.com/media/imageslist/new7.png&amp;src=http://followunfollow.herokuapp.com/media/imageslist/new7.png">Share</a></div>#}
 
-        <div class="fb-share-button" data-href="http://followunfollow.herokuapp.com/" data-layout="button" data-size="large" data-mobile-iframe="false"><a class="fb-xfbml-parse-ignore" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Ffollowunfollow.herokuapp.com%2F&amp;src=sdkpreparse">Share</a></div>
+        <div class="fb-share-button" data-href="http://followunfollow.herokuapp.com/test/" data-layout="button" data-size="large" data-mobile-iframe="false"><a class="fb-xfbml-parse-ignore" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Flocalhost%3A9090%2Ftest%2F&amp;src=sdkpreparse">Share</a></div>
 
 
     </div>
@@ -150,6 +150,18 @@
 </div><!-- /#wrapper -->
 
 <script type="text/javascript">
+
+    $('.img').on('click',function() {
+
+        $('#share_btn').attr('href', '/share/'+$(this).attr('id')+'')
+        alert($('#share_btn').attr('href', '/share/'+$(this).attr('id')+''))
+    })
+    $('.img').on('click',function() {
+
+        $('#tweet_btn').attr('href', '/tweet/'+$(this).attr('id')+'')
+{#        alert($('#tweet_btn').attr('href', '/tweet/'+$(this).attr('id')+''))#}
+    })
+
 $( ".img-textual" ).click(function() {
     // alert('sssss');
     // var get_text = $(this).html();
@@ -160,7 +172,6 @@ $( ".img-textual" ).click(function() {
 
     $("#mask-image").attr('src', get_text);
 });
-
 
 
 
