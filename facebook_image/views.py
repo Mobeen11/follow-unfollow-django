@@ -4,6 +4,7 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.views import logout
 from .models import *
 from PIL import Image
+from urllib2 import urlopen, HTTPError
 from django.template.defaultfilters import slugify
 from django.core.files.base import ContentFile
 from django.core.files import File
@@ -151,15 +152,18 @@ def share_post(request, pk):
         facebook_img = FacebookStatus()
         for fb in fb_profile:
             print "this is fb profile"
-            background = Image.open(fb.link)
+            background = Image.open(fb.profile_image)
             background = background.resize((255, 230))
             # change the file name accordingly
             foreground = Image.open(i.image)
             foreground = foreground.resize((250, 230))
             background.paste(foreground, (0, 0), foreground)
             background.save('static/test/background.png', "PNG")
+            # avatar = background.save('static/test/background.png', "PNG")
+            # fb.new_image.save(slugify(user.username) + '.png',
+            #                                 ContentFile(avatar.read()))
             fb.new_image.save("background" + '.png', File(open('static/test/background.png')))
-            fb.link = "https://followunfollow.herokuapp.com"+fb.new_image.url
+            fb.link = 'http://followunfollow.herokuapp.com'+fb.new_image.url
             fb.save()
             background.show()
 
@@ -171,7 +175,15 @@ def share_post(request, pk):
     auth = user.social_auth.first()
     print "auth: ", auth.extra_data['access_token']
     graph = facebook.GraphAPI(auth.extra_data['access_token'])
-    graph.put_object('me', 'feed', link=status.link)
+    file = open('static/test/background.png', 'rb')
+    if file:
+        print "file found"
+    data = file.read()
+    # graph.put_object('me', 'photos', message="You can put a caption here", source=file.read())
+    albumid = ''
+    with open("static/test/background.png", "rb") as image:
+        posted_image_id = graph.put_photo(image)
+    file.close()
     print "link:",status.link
     # status.publish_timestamp = datetime.datetime.now()
     status.save()
@@ -184,7 +196,7 @@ def tweet(request, pk):
     # print "request: ", request.session
     # print "c: ", c
     user = request.user
-    print "user: ", user
+    print "user: ", user.social_auth
     CONSUMER_KEY = 'HISKYRsVumzfw29OsuO6uemJY'
     CONSUMER_SECRET = '2sUI8VMPSaYpma1wQeQn6GSKP9o08uQAbtYQH5JAhIufWPT4Xv'
     ACCESS_TOKEN_KEY = '587179393-0WzjoaIUP8hg45wmabvebNLErFHcTOTquh4HJyeQ'
