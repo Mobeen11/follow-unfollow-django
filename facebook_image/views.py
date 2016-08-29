@@ -12,10 +12,9 @@ import facebook
 import urllib
 from urlparse import urlparse
 from twitter import *
-from twitter import *
 from twython import Twython
 
-from twython_django_oauth.models import TwitterProfile
+# from twython_django_oauth.models import TwitterProfile
 
 from django.template import Context, RequestContext
 
