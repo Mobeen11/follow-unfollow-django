@@ -131,6 +131,7 @@
         <a class="container" href="" id='share_btn'>SHARE</a>
         <a class="container" href="/tweet/" id='tweet_btn'>Tweet</a>
 {#         {% social_widget_render "facebook/share_button.html" locale="en_US" app_id=12345678 href="developers.facebook.com" layout="none" %} #}
+
         <a href="https://twitter.com/share" class="twitter-share-button" data-show-count="false">Tweet</a><script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
 
 {#        <div class="fb-share-button" data-href="http://followunfollow.herokuapp.com/media/imageslist/new7.png" data-layout="button_count" data-mobile-iframe="true"><a class="fb-xfbml-parse-ignore" target="_blank" href="http://followunfollow.herokuapp.com/media/imageslist/new7.png&amp;src=http://followunfollow.herokuapp.com/media/imageslist/new7.png">Share</a></div>#}
@@ -155,13 +156,15 @@
 
         var id_image = $(this).attr('id');
         console.log("this "+ id_image)
+        $('#share_btn').attr('href', '/share/'+id_image)
 {#        alert($('#share_btn').attr('href', '/share/'+id_image))#}
     })
      $('.img-textual').on('click',function() {
 
         var id_image = $(this).attr('id');
         console.log("this "+ id_image)
-{#        alert($('#tweet_btn').attr('href', '/tweet/'+id_image))#}
+        $('#tweet_btn').attr('href', '/tweet/'+id_image)
+{#         alert($('#tweet_btn').attr('href', '/tweet/'+id_image))#}
     })
 
 $( ".img-textual" ).click(function() {
