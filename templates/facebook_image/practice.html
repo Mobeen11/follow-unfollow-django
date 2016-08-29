@@ -103,7 +103,7 @@
 
             {% for i in images_display %}
             <div class="img">
-                <img src="{{ i.image.url }}" class="img-textual"  alt="Picture">
+                <img src="{{ i.image.url }}" class="img-textual"  alt="Picture"  id='{{ i.id }}'>
             </div>
             {% endfor %}
 
@@ -151,15 +151,17 @@
 
 <script type="text/javascript">
 
-    $('.img').on('click',function() {
+    $('.img-textual').on('click',function() {
 
-        $('#share_btn').attr('href', '/share/'+$(this).attr('id')+'')
-        alert($('#share_btn').attr('href', '/share/'+$(this).attr('id')+''))
+        var id_image = $(this).attr('id');
+        console.log("this "+ id_image)
+{#        alert($('#share_btn').attr('href', '/share/'+id_image))#}
     })
-    $('.img').on('click',function() {
+     $('.img-textual').on('click',function() {
 
-        $('#tweet_btn').attr('href', '/tweet/'+$(this).attr('id')+'')
-{#        alert($('#tweet_btn').attr('href', '/tweet/'+$(this).attr('id')+''))#}
+        var id_image = $(this).attr('id');
+        console.log("this "+ id_image)
+{#        alert($('#tweet_btn').attr('href', '/tweet/'+id_image))#}
     })
 
 $( ".img-textual" ).click(function() {
