@@ -60,9 +60,9 @@ def save_profile(backend, user, response, *args, **kwargs):
             print "user already exist"
             # print "profile:", twitter.getProfileImage(user, size='bigger')
         else:
-            user = User.objects.get(username = response['access_token']['screen_name'])
-            user.set_password(response['oauth_token']['oauth_token_secret'])
-            user.save()
+            # user = User.objects.get(username = response['access_token']['screen_name'])
+            # user.set_password(response['oauth_token']['oauth_token_secret'])
+            # user.save()
 
             image_url = response['profile_image_url_https']
             avatar = urlopen(image_url)
@@ -84,18 +84,25 @@ def save_profile(backend, user, response, *args, **kwargs):
         else:
             print "this is facebook"
             url = 'http://graph.facebook.com/{0}/picture'.format(response['id'])
-            facebook_obj.link = url
-            avatar = urlopen(url)
-            facebook_obj.profile_image.save(slugify(user.username) + '.png',
-                        ContentFile(avatar.read()))
-            facebook_obj.username = user.username
-            fb_username = kwargs['details']['username']
-            facebook_obj.fullname = fb_username
+            try:
+                response = request('GET', url, params={'type': 'large'})
+                response.raise_for_status()
+                print "this is largeImage"
+            except HTTPError:
+                pass
+            else:
+                facebook_obj.link = url
+                avatar = urlopen(url)
+                facebook_obj.profile_image.save(slugify(user.username) + '.png',
+                            ContentFile(avatar.read()))
+                facebook_obj.username = user.username
+                fb_username = kwargs['details']['username']
+                facebook_obj.fullname = fb_username
 
-            print "image_url: ", url
-            print "username: ", fb_username
-            facebook_obj.save()
-            print "that is facebook user"
+                print "image_url: ", url
+                print "username: ", fb_username
+                facebook_obj.save()
+                print "that is facebook user"
 
         # print "image main start"
         # background = Image.open('mubeenyousaf78952f92d6904ad3.png')

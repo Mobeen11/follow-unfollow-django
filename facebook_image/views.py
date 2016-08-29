@@ -151,7 +151,7 @@ def share_post(request, pk):
         facebook_img = FacebookStatus()
         for fb in fb_profile:
             print "this is fb profile"
-            background = Image.open(fb.profile_image)
+            background = Image.open(fb.link)
             background = background.resize((255, 230))
             # change the file name accordingly
             foreground = Image.open(i.image)
