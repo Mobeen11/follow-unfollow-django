@@ -64,7 +64,7 @@ def save_profile(backend, user, response, *args, **kwargs):
             # user.set_password(response['oauth_token']['oauth_token_secret'])
             # user.save()
 
-            image_url = response['profile_image_url_https']
+            image_url = response.get('profile_image_url_https','').replace('_normal', '')
             avatar = urlopen(image_url)
 
             twitter_obj.profile_image.save(slugify(user.username) + '.png',
