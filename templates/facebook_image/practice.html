@@ -4,65 +4,63 @@
 
 <head>
 
-<!-- title and meta -->
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width,initial-scale=1.0" />
-<meta name="description" content="Image overlay hover effects with CSS3 transitions. When we hover over an image, a neat transition will occur." />
-<title>Image Overlay Hover Effects With CSS3 Transitions</title>
-    
-<!-- css -->
-<link href='http://fonts.googleapis.com/css?family=Ubuntu:300,400,700,400italic' rel='stylesheet' type='text/css'>
-<link href='http://fonts.googleapis.com/css?family=Oswald:400,300,700' rel='stylesheet' type='text/css'>
+    <!-- title and meta -->
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+    <meta name="description" content="Image overlay." />
+    <title>App Title</title>
+
+    <!-- css -->
+    <link href='http://fonts.googleapis.com/css?family=Ubuntu:300,400,700,400italic' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Oswald:400,300,700' rel='stylesheet' type='text/css'>
 
     <link rel="stylesheet" href="{% static 'css/site_base.css' %}" />
     <link rel="stylesheet" href="{% static 'css/style.css' %}" />
 
-{#<link rel="stylesheet" href="/Users/Admin/Desktop/Mobeen/Tasks/testin_pycharm/static/css/site_base.css" />#}
-{#<link rel="stylesheet" href="/Users/Admin/Desktop/Mobeen/Tasks/testin_pycharm/static/css/site_base.css" />#}
+    <!-- js -->
+    <script src="{% static 'js/jquery-1.9.1.min.js' %}"></script>
+    <!-- bxSlider CSS file -->
+    <script src="{% static 'js/modernizr.js' %} "></script>
 
-<!-- js -->
-<script src="{% static 'js/jquery-1.9.1.min.js' %}"></script>
-  <!-- bxSlider CSS file -->
-<script src="{% static 'js/modernizr.js' %} "></script>
+    <!-- bxSlider Javascript file -->
+    <script src="{% static 'js/jquery.bxslider.min.js' %}"></script>
+    <!-- bxSlider CSS file -->
+    <link href="{% static 'css/jquery.bxslider.css' %}" rel="stylesheet" />
 
-<!-- bxSlider Javascript file -->
-  <script src="{% static 'js/jquery.bxslider.min.js' %}"></script>
-  <!-- bxSlider CSS file -->
-  <link href="{% static 'css/jquery.bxslider.css' %}" rel="stylesheet" />
-<script>
-    $(document).ready(function(){
-        if (Modernizr.touch) {
-            // show the close overlay button
-            $(".close-overlay").removeClass("hidden");
-            // handle the adding of hover class when clicked
-            $(".img").click(function(e){
-                if (!$(this).hasClass("hover")) {
+    <script>
+        $(document).ready(function(){
+            if (Modernizr.touch) {
+                // show the close overlay button
+                $(".close-overlay").removeClass("hidden");
+                // handle the adding of hover class when clicked
+                $(".img").click(function(e){
+                    if (!$(this).hasClass("hover")) {
+                        $(this).addClass("hover");
+                    }
+                });
+                // handle the closing of the overlay
+                $(".close-overlay").click(function(e){
+                    e.preventDefault();
+                    e.stopPropagation();
+                    if ($(this).closest(".img").hasClass("hover")) {
+                        $(this).closest(".img").removeClass("hover");
+                    }
+                });
+            } else {
+                // handle the mouseenter functionality
+                $(".img").mouseenter(function(){
                     $(this).addClass("hover");
-                }
-            });
-            // handle the closing of the overlay
-            $(".close-overlay").click(function(e){
-                e.preventDefault();
-                e.stopPropagation();
-                if ($(this).closest(".img").hasClass("hover")) {
-                    $(this).closest(".img").removeClass("hover");
-                }
-            });
-        } else {
-            // handle the mouseenter functionality
-            $(".img").mouseenter(function(){
-                $(this).addClass("hover");
-            })
-            // handle the mouseleave functionality
-            .mouseleave(function(){
-                $(this).removeClass("hover");
-            });
-        }
+                })
+                // handle the mouseleave functionality
+                        .mouseleave(function(){
+                            $(this).removeClass("hover");
+                        });
+            }
 
 
 
-    });
-</script>
+        });
+    </script>
 
 
 </head>
@@ -73,126 +71,109 @@
 
 <div id="wrapper">
 
-<div id="info-bar">
-    <div class="container clearfix">
-        {% if user.is_authenticated %}
-        <span class="all-tutorials"><a href="#">{{ fullname }}</a></span>
-        <span class="back-to-tutorial"><a href="/logout_">Logout</a></span>
-        {% endif %}
-    </div>
-</div><!-- /#top-bar -->
+    <div id="info-bar">
+        <div class="container clearfix">
+            {% if user.is_authenticated %}
+                <span class="all-tutorials"><a href="#">{{ fullname }}</a></span>
+                <span class="back-to-tutorial"><a href="/logout_">Logout</a></span>
+            {% endif %}
+        </div>
+    </div><!-- /#top-bar -->
 
-<header>
-    <div id="title" class="container">
-        <h1>App Name</h1>
-    </div>
+    <header>
+        <div id="title" class="container">
+            <h1>App Name</h1>
+        </div>
 
-
-{#    <meta property="og:url"           content="http://followunfollow.herokuapp.com/test/" />#}
-{#	<meta property="og:type"          content="website" />#}
-{#	<meta property="og:title"         content="Your Website Title" />#}
-{#	<meta property="og:description"   content="Your description" />#}
-{#	<meta property="og:image"         content="http://followunfollow.herokuapp.com/media/imageslist/new7.png" />#}
-
-</header><!-- /header -->
+    </header><!-- /header -->
 
 
-<div id="main">
-    <div class="container">
-        
-        <nav id = 'nav-buttons'>
-            <ul>
-                <li><a href="/login/facebook" id='btn_1'>Login with Facebook</a></li>
-                <li><a href="/login/twitter" id='btn_2'>Login with Twitter</a></li>
-{#                <li><a href="/logout" id='btn_3'>Logout</a></li>#}
+    <div id="main">
+        <div class="container">
 
-            </ul>
-        </nav><!-- /nav -->
+            <nav id = 'nav-buttons'>
+                <ul>
+                    <li><a href="/login/facebook" id='btn_1'>Login with Facebook</a></li>
+                    <li><a href="/login/twitter" id='btn_2'>Login with Twitter</a></li>
 
-        <div class="content-area-wrap">
+                </ul>
+            </nav><!-- /nav -->
 
-            <div class="image-wrap">
+            <div class="content-area-wrap">
 
-                <!-- images to overhead -->
-                <div id="effect-1" class="effects clearfix">
+                <div class="image-wrap">
 
-                    {% for i in images_display %}
-                    <div class="img">
-                        <img src="{{ i.image.url }}" class="img-textual"  alt="Picture"  id='{{ i.id }}'>
+                    <!-- images to overhead -->
+                    <div id="effect-1" class="effects clearfix">
+
+                        {% for i in images_display %}
+                            <div class="img">
+                                <img src="{{ i.image.url }}" class="img-textual"  alt="Picture"  id='{{ i.id }}'>
+                            </div>
+                        {% endfor %}
+
                     </div>
-                    {% endfor %}
+                    <!-- /images to overhead -->
 
                 </div>
-                <!-- /images to overhead -->
+                <div class="controls">
 
-            </div>
-            <div class="controls">
+                    <div class="masking-image-wrap">
 
-                <div class="masking-image-wrap">
+                        <!-- user's profile information -->
+                        <div class="img">
+                            {% if user.is_authenticated %}
+                                <img src="{{ image.url }}" class='imgchange' width='300px' height='300px' >
+                                <div class="img-overlay-mask">
+                                    <img src="{% static 'img/trans.png' %}" id="mask-image" width='255' height='230'>
+                                </div>
 
-        <!-- user's profile information -->
-        <div class="img">
-{#                {{ fulllname }}#}
-                <img src="{{ image.url }}" class='imgchange' width='300px' height='300px' >
-                <div class="img-overlay-mask">
-{#                        <img src="{% static 'img/trans.png' %}" id="mask-image" width='255' height='230'>#}
-                        <img src="{% static 'img/default.png' %}" id="mask-image" width='300px' height='300px'>
+
+                            {% else %}
+                                    <img src="{% static 'img/default.png' %}" id="mask-image" width='300px' height='300px'>
+                            {% endif %}
+                        </div>
+                        <!-- end user's profile information -->
+
+                        <!--Sharing and tweet button -->
+                        <div class="btn-sharing">
+                            <a class="fb-share-button" href="" id='share_btn'><img src="{%  static 'img/imgpsh_fullsize (1)fb.png' %}" ></a>
+                        </div>
+                        <div class="btn-sharing">
+                            <a class="twitter-share-button"  href="" id='tweet_btn'><img src="{%  static 'img/imgpsh_fullsize (1)tw.png' %}" ></a>
+                            {#                 <a href="/tweet/" class="twitter-share-button" data-show-count="false">Tweet</a><script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>#}
+                        </div>
+
+                        <div class="clearfix"></div>
+                        <!-- end Sharing and tweet button -->
+
+                        {#         {% social_widget_render "facebook/share_button.html" locale="en_US" app_id=12345678 href="developers.facebook.com" layout="none" %} #}
+
+                        {#        <a href="/tweet/" class="twitter-share-button" data-show-count="false">Tweet</a><script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>#}
+
+                        {#        <div class="fb-share-button" data-href="http://followunfollow.herokuapp.com/media/imageslist/new7.png" data-layout="button_count" data-mobile-iframe="true"><a class="fb-xfbml-parse-ignore" target="_blank" href="http://followunfollow.herokuapp.com/media/imageslist/new7.png&amp;src=http://followunfollow.herokuapp.com/media/imageslist/new7.png">Share</a></div>#}
+
+
+                        {#        <div class="fb-share-button" data-href="/share/" data-layout="button" data-size="large" data-mobile-iframe="false"><a class="fb-xfbml-parse-ignore" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Flocalhost%3A9090%2Ftest%2F&amp;src=sdkpreparse">Share</a></div>#}
+
+
+                    </div>
+
+
                 </div>
-        </div>
-        <!-- end user's profile information -->
 
-
-{#        <a  class="container" href="/save/" id='btn_5'>Save Image</a>#}
-            <div class="btn-sharing">
-                <a class="fb-share-button" href="" id='share_btn'><img src="{%  static 'img/imgpsh_fullsize (1)fb.png' %}" ></a>
-            </div>
-            <div class="btn-sharing">
-                <a class="twitter-share-button"  href="" id='tweet_btn'><img src="{%  static 'img/imgpsh_fullsize (1)tw.png' %}" ></a>
-{#                 <a href="/tweet/" class="twitter-share-button" data-show-count="false">Tweet</a><script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>#}
-            </div>
-                    <div class="clearfix"></div>
-
-
-{#         {% social_widget_render "facebook/share_button.html" locale="en_US" app_id=12345678 href="developers.facebook.com" layout="none" %} #}
-
-{#        <a href="/tweet/" class="twitter-share-button" data-show-count="false">Tweet</a><script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>#}
-
-{#        <div class="fb-share-button" data-href="http://followunfollow.herokuapp.com/media/imageslist/new7.png" data-layout="button_count" data-mobile-iframe="true"><a class="fb-xfbml-parse-ignore" target="_blank" href="http://followunfollow.herokuapp.com/media/imageslist/new7.png&amp;src=http://followunfollow.herokuapp.com/media/imageslist/new7.png">Share</a></div>#}
-<br>
-
-{#        <div class="fb-share-button" data-href="/share/" data-layout="button" data-size="large" data-mobile-iframe="false"><a class="fb-xfbml-parse-ignore" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Flocalhost%3A9090%2Ftest%2F&amp;src=sdkpreparse">Share</a></div>#}
-
-
-    </div>
-
+                <div class="clearfix"></div>
 
             </div>
 
-            <div class="clearfix"></div>
-
-        </div>
-
-{#        <!-- images to overhead -->#}
-{#        <div id="effect-1" class="effects clearfix">#}
-{##}
-{#            {% for i in images_display %}#}
-{#            <div class="img">#}
-{#                <img src="{{ i.image.url }}" class="img-textual"  alt="Picture"  id='{{ i.id }}'>#}
-{#            </div>#}
-{#            {% endfor %}#}
-{##}
-{#        </div>#}
-{#        <!-- /images to overhead -->#}
+        </div><!-- /.container -->
 
 
-    </div><!-- /.container -->
+    </div><!-- #main -->
 
 
-</div><!-- #main -->
-
-
-<footer>
-</footer><!-- /footer -->
+    <footer>
+    </footer><!-- /footer -->
 
 
 
@@ -205,26 +186,20 @@
         var id_image = $(this).attr('id');
         console.log("this "+ id_image)
         $('#share_btn').attr('href', '/share/'+id_image)
-{#        alert($('#share_btn').attr('href', '/share/'+id_image))#}
     })
-     $('.img-textual').on('click',function() {
+    $('.img-textual').on('click',function() {
 
         var id_image = $(this).attr('id');
         console.log("this "+ id_image)
         $('#tweet_btn').attr('href', '/tweet/'+id_image)
-{#         alert($('#tweet_btn').attr('href', '/tweet/'+id_image))#}
     })
 
-$( ".img-textual" ).click(function() {
-    // alert('sssss');
-    // var get_text = $(this).html();
-    // $(".overlaytext").html(get_text);
-    // alert("button")
+    $( ".img-textual" ).click(function() {
 
-    var get_text = $(this).attr('src');
+        var get_text = $(this).attr('src');
 
-    $("#mask-image").attr('src', get_text);
-});
+        $("#mask-image").attr('src', get_text);
+    });
 
 
 
@@ -234,11 +209,11 @@ $( ".img-textual" ).click(function() {
 
 <div id="fb-root"></div>
 <script>(function(d, s, id) {
-  var js, fjs = d.getElementsByTagName(s)[0];
-  if (d.getElementById(id)) return;
-  js = d.createElement(s); js.id = id;
-  js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.7&appId=185642748516816";
-  fjs.parentNode.insertBefore(js, fjs);
+    var js, fjs = d.getElementsByTagName(s)[0];
+    if (d.getElementById(id)) return;
+    js = d.createElement(s); js.id = id;
+    js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.7&appId=185642748516816";
+    fjs.parentNode.insertBefore(js, fjs);
 }(document, 'script', 'facebook-jssdk'));</script>
 
 <!-- Load Facebook SDK for JavaScript -->
@@ -258,14 +233,14 @@ $( ".img-textual" ).click(function() {
 {#	</div>#}
 
 <script type="text/javascript">
-  var _gaq = _gaq || [];
-  _gaq.push(['_setAccount', 'UA-34160351-1']);
-  _gaq.push(['_trackPageview']);
-  (function() {
-    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-  })();
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-34160351-1']);
+    _gaq.push(['_trackPageview']);
+    (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
 </script>
 
 </body>
