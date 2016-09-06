@@ -239,16 +239,14 @@ USE_TZ = True
 BASE_DIR = os.path.dirname(os.path.abspath(__file__)) #+ '/..'
 STATIC_URL = '/static/'
 
-
-STATIC_ROOT = os.path.join(os.path.dirname(BASE_DIR), "static")
-# STATIC_ROOT = "E:/Git Parent/follow/follow-prog-2/static"
-# print(STATIC_ROOT)
-
 ADMIN_MEDIA_PREFIX = STATIC_URL + 'admin/'
+STATIC_ROOT = os.path.join(BASE_DIR, "static")
+# STATIC_ROOT = "E:/Git Parent/follow/follow-prog-2/static"
+
+
 # error in static files
 STATICFILES_DIR = (
-    os.path.join(os.path.dirname(BASE_DIR), "static"),
-    # '/var/www/followunfollow.herokuapp.com/static/',
+    os.path.join(BASE_DIR, "static"),
     # '/Users/Admin/Desktop/djangoProjects/follow-prog-2/static'
 
 )
