@@ -83,7 +83,8 @@ def save_profile(backend, user, response, *args, **kwargs):
             print "user already exist"
         else:
             print "this is facebook"
-            url = 'http://graph.facebook.com/{0}/picture'.format(response['id'])
+            url = 'http://graph.facebook.com/{0}/picture?type='.format(response['id'])
+            print "link_pipeline: ", url
             try:
                 response = request('GET', url, params={'type': 'large'})
                 response.raise_for_status()
@@ -93,8 +94,11 @@ def save_profile(backend, user, response, *args, **kwargs):
             else:
                 facebook_obj.link = url
                 avatar = urlopen(url)
-                facebook_obj.profile_image.save(slugify(user.username) + '.png',
-                            ContentFile(avatar.read()))
+                # facebook_obj.profile_image.save(slugify(user.username) + '.png',
+                #             ContentFile(avatar.read()))
+                facebook_obj.profile_image.save('{0}_social.jpg'.format(user.username),
+                                           ContentFile(response.content))
+                print "fb_profile_image_url: ", facebook_obj.profile_image.url
                 facebook_obj.username = user.username
                 fb_username = kwargs['details']['username']
                 facebook_obj.fullname = fb_username
