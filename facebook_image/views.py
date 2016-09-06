@@ -165,6 +165,11 @@ def share_post(request, pk):
             # avatar = background.save('static/test/background.png', "PNG")
             # fb.new_image.save(slugify(user.username) + '.png',
             #                                 ContentFile(avatar.read()))
+            # x = (fb.new_image.url).split('facebookstatus_images/')
+            # y = "".join(x)
+            # print "link: ", y
+            #
+            # fb.link = 'http://followunfollow.herokuapp.com' + y
             fb.new_image.save("background" + '.png', File(open('static/test/background.png')))
             fb.link = 'http://followunfollow.herokuapp.com'+fb.new_image.url
             fb.save()

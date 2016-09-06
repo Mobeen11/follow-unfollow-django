@@ -284,6 +284,34 @@ a.expand {
 
  } 
 
+ .content-area-wrap{
+   background: #f6f6f6;
+   min-height:400px;
+   padding: 10px;
+ }
+ .image-wrap{
+   width: 694px;
+   height:auto;
+   float: left;
+ }
+ .controls{
+   width: 300px;
+   height:auto;
+   float: left;
+ }
+ .clearfix{
+   clear: both;
+ }
+.btn-sharing{
+  margin-top:10px;
+}
+.btn-sharing a{
+  display: block;
+  text-align: center;
+}
+
+
+
 
 
 /* ------------------------------------------------------------ *\
