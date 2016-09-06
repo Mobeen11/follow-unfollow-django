@@ -61,6 +61,7 @@ def test(request):
                     # 'profile': twitter_profile,
                     'image': tw.profile_image,
                     'images_display': images,
+                    'user': user
                 }
 
         if facebook_profile:
@@ -75,11 +76,12 @@ def test(request):
                     # 'profile': twitter_profile,
                     'image': fb.profile_image,
                     'images_display': images,
+                    'user': user
                 }
 
     else:
         print "user doesn't exist"
-        context = {'images_display': images, }
+        context = {'images_display': images, 'user':user }
     return render(request, 'facebook_image/practice.html', context)
 
 
@@ -140,6 +142,7 @@ def save(request):
 #     user = request.user
 #     user = User.objects.get(username=user.username)
 #share image on facebook
+@login_required
 def share_post(request, pk):
     print "this is error"
     user = request.user
@@ -191,6 +194,7 @@ def share_post(request, pk):
     return redirect('test')
 
 from TwitterAPI import TwitterAPI
+@login_required
 def tweet(request, pk):
     c = RequestContext(request)
     # print "request: ", request.session
@@ -233,8 +237,48 @@ def tweet(request, pk):
 
 
 
-
-
+#
+# # this is attemptt 2
+# from django import template
+# from django.contrib.sites.models import Site
+# from django.db.models import Model
+# from django.template.defaultfilters import urlencode
+# try:
+#     from django_bitly.templatetags.bitly import bitlify
+#     DJANGO_BITLY = True
+# except ImportError:
+#     DJANGO_BITLY = False
+#
+# register = template.Library()
+#
+# TWITTER_ENDPOINT = 'http://twitter.com/intent/tweet?text=%s'
+# FACEBOOK_ENDPOINT = 'http://www.facebook.com/sharer/sharer.php?u=%s'
+#
+# class MockRequest(object):
+#     @staticmethod
+#     def build_absolute_uri(relative_url):
+#         if relative_url.startswith('http'):
+#             return relative_url
+#         current_site = Site.objects.get_current()
+#         return '%s%s' % (current_site.domain, relative_url)
+#
+# def _build_url(request, obj_or_url):
+#     if obj_or_url is not None:
+#         if isinstance(obj_or_url, Model):
+#             if DJANGO_BITLY:
+#                 return bitlify(obj_or_url)
+#             else:
+#                 return request.build_absolute_uri(obj_or_url.get_absolute_url())
+#         else:
+#             return request.build_absolute_uri(obj_or_url)
+#     return ''
+#
+# @register.simple_tag(takes_context=True)
+# def post_to_facebook_url(context, obj_or_url=None):
+#     request = context.get('request', MockRequest())
+#     url = _build_url(request, obj_or_url)
+#     context['facebook_url'] = FACEBOOK_ENDPOINT % urlencode(url)
+#     return context
 
 
 # def tweet(request):

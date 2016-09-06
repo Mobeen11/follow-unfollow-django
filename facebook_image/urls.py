@@ -6,7 +6,7 @@ from django.conf.urls.static import static
 urlpatterns = [
     url(r'^home/$', 'facebook_image.views.home', name='home'),
     url(r'^done/$', 'facebook_image.views.done', name='done'),
-    url(r'^logout/$', 'facebook_image.views.logout_view', name='logout'),
+    url(r'^logout_/$', 'facebook_image.views.logout_view', name='logout_'),
     url(r'^test/$', 'facebook_image.views.test', name='test'),
     url(r'^save/$', 'facebook_image.views.save', name='save'),
     url(r'^share/(?P<pk>\d+)/$', 'facebook_image.views.share_post', name='share'),
