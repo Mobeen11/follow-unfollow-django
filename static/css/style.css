@@ -3,7 +3,7 @@
 ============================================================ */
 nav ul {
   list-style-type: none;
-  margin: 0 0 30px 0;
+  margin: 0 0 30px 650px;
   padding: 0;
   text-align: center;
 }
@@ -30,7 +30,7 @@ nav ul li a.active {
   GLOBAL
 ============================================================ */
 .effects {
-  padding-left: 15px;
+  /*padding-left: 15px;*/
 }
 .effects .img {
   position: relative;
@@ -38,15 +38,19 @@ nav ul li a.active {
   margin-bottom: 5px;
   width: 25%;
   overflow: hidden;
+  padding: 2px;
+  border: 1px solid #999;
+  min-height: 160px;
+  margin-right: 10px;
 }
 .effects .img:nth-child(n) {
-  margin-right: 5px;
+  /*margin-right: 5px;*/
 }
 .effects .img:first-child {
-  margin-left: -15px;
+  /*margin-left: -15px;*/
 }
 .effects .img:last-child {
-  margin-right: 0;
+  /*margin-right: 0;*/
 }
 .effects .img img {
   display: block;
@@ -267,7 +271,7 @@ a.expand {
 .masking-image-wrap .img{
 
   position: relative;
-  width: 25%;
+  /*widthth: 25%;*/
 
 }
 .masking-image-wrap .img img{
@@ -282,7 +286,33 @@ a.expand {
     width: 100%;
     height: 100%;
 
- } 
+ }
+
+ .content-area-wrap{
+   background: #f6f6f6;
+   min-height:400px;
+   padding: 10px;
+ }
+ .image-wrap{
+   width: 694px;
+   height:auto;
+   float: left;
+ }
+ .controls{
+   width: 300px;
+   height:300px;
+   float: left;
+ }
+ .clearfix{
+   clear: both;
+ }
+.btn-sharing{
+  margin-top:10px;
+}
+.btn-sharing a{
+  display: block;
+  text-align: center;
+}
 
 
 
