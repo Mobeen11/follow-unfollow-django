@@ -133,9 +133,10 @@
         <!-- user's profile information -->
         <div class="img">
 {#                {{ fulllname }}#}
-                <img src="{{ image.url }}" class='imgchange' width='300px' height='300px' alt="Profile Picture">
+                <img src="{{ image.url }}" class='imgchange' width='300px' height='300px' >
                 <div class="img-overlay-mask">
-                        <img src="{% static 'img/trans.png' %}" id="mask-image" width='255' height='230'>
+{#                        <img src="{% static 'img/trans.png' %}" id="mask-image" width='255' height='230'>#}
+                        <img src="{% static 'img/default.png' %}" id="mask-image" width='300px' height='300px'>
                 </div>
         </div>
         <!-- end user's profile information -->
@@ -149,6 +150,7 @@
                 <a class="twitter-share-button"  href="" id='tweet_btn'><img src="{%  static 'img/imgpsh_fullsize (1)tw.png' %}" ></a>
 {#                 <a href="/tweet/" class="twitter-share-button" data-show-count="false">Tweet</a><script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>#}
             </div>
+                    <div class="clearfix"></div>
 
 
 {#         {% social_widget_render "facebook/share_button.html" locale="en_US" app_id=12345678 href="developers.facebook.com" layout="none" %} #}
