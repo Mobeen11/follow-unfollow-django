@@ -244,6 +244,7 @@ STATIC_ROOT = os.path.join(os.path.dirname(BASE_DIR), "static")
 # STATIC_ROOT = "E:/Git Parent/follow/follow-prog-2/static"
 # print(STATIC_ROOT)
 
+ADMIN_MEDIA_PREFIX = STATIC_URL + 'admin/'
 # error in static files
 STATICFILES_DIR = (
     os.path.join(os.path.dirname(BASE_DIR), "static"),
