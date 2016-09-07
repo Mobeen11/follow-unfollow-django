@@ -198,7 +198,8 @@ def share_post(request, pk):
     for s in statuses:
         print "s.image: ", s.new_image.url
         # with open("static/test/background.png", "rb") as image:
-        parameters = {'name': 'Testing',
+        parameters = {
+                      'name': 'FollowunFollow',
                       'link': 'http://followunfollow.herokuapp.com/test',
                       'message': s.message,
                       'description': 'Place Image Over your Profile',
