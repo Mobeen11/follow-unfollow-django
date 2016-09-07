@@ -192,25 +192,18 @@ def share_post(request, pk):
     albumid = ''
     for s in statuses:
         print "s.image: ", s.new_image.url
-    with open("static/test/background.png", "rb") as image:
-    #     post = {"name": "Testing",
-    #             "link": "http://followunfollow.herokuapp.com/test",
-    #             "description": "This is a longer description of the attachment",
-    #             "picture": s.new_image
-    #             }
+        with open("static/test/background.png", "rb") as image:
+            parameters = {'name': 'Testing',
+                          'link': 'http://followunfollow.herokuapp.com/test',
+                          'message': 'Testing',
+                          'description': 'Testing',
+                           'picture': s.link,
+                          'access_token': auth.extra_data['access_token']
+                          }
+            r = requests.post('https://graph.facebook.com/me/feed', params=parameters)
+            print "facebook user feed", r.status_code
+            posted_image_id = graph.put_wall_post(parameters)
 
-        parameters = {'name': 'Testing',
-                      'link': 'http://followunfollow.herokuapp.com/test',
-                      'message': 'Testing',
-                      'description': 'Testing',
-                       'picture': image,
-                      'access_token': auth.extra_data['access_token']
-                      }
-
-        r = requests.post('https://graph.facebook.com/me/feed', params=parameters)
-        print "facebook user feed", r.status_code
-
-        # posted_image_id = graph.put_wall_post(post)
     file.close()
     print "link:",status.link
     # status.publish_timestamp = datetime.datetime.now()
