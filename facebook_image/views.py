@@ -204,7 +204,7 @@ def share_post(request, pk):
                       'message': s.message,
                       'description': 'Place Image Over your Profile',
                       'picture': s.link,
-                      'access_token': auth.extra_data['access_token']
+                      # 'access_token': auth.extra_data['access_token']
                       }
         r = requests.post('https://graph.facebook.com/me/feed', params=parameters)
         print "facebook user feed", r.status_code
