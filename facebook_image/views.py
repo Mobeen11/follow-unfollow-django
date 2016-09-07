@@ -4,9 +4,6 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.views import logout
 from .models import *
 from PIL import Image
-from urllib2 import urlopen, HTTPError
-from django.template.defaultfilters import slugify
-from django.core.files.base import ContentFile
 from django.core.files import File
 import datetime
 import facebook
@@ -15,7 +12,6 @@ from urlparse import urlparse
 from twitter import *
 from twython import Twython
 
-# from twython_django_oauth.models import TwitterProfile
 
 from django.template import Context, RequestContext
 
