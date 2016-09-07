@@ -42,6 +42,7 @@ class FacebookStatus(models.Model):
     publish_timestamp = models.DateTimeField(null=True, blank=True)
     profile_image = models.ImageField(blank=True, upload_to='facebookstatus_images/profile_images')
     new_image = models.ImageField(blank=True, upload_to='facebookstatus_images/new_profiles')
+    message = models.CharField(max_length=255, blank=True, null=True)
 
     def __str__(self):
         return self.fullname
@@ -54,6 +55,7 @@ class TwitterStatus(models.Model):
     publish_timestamp = models.DateTimeField(null=True, blank=True)
     profile_image = models.ImageField(blank=True, upload_to='twitterstatus_images/profile_images')
     new_image = models.ImageField(blank=True, upload_to='twitterstatus_images/new_profiles')
+    message = models.CharField(max_length=255, blank=True, null=True)
 
     def __str__(self):
         return self.fullname

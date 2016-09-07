@@ -151,6 +151,10 @@ def share_post(request, pk):
     print "user: ", user
     fb_profile = FacebookStatus.objects.filter(username=user)
     print "fb_profile: ", fb_profile
+    if request.method == "GET":
+        print "request is get"
+        message = request.GET.get("message")
+        print "message: ", message
     images = ImagesList.objects.filter(pk=pk)
     for i in images:
         facebook_img = FacebookStatus()
@@ -173,6 +177,7 @@ def share_post(request, pk):
             # fb.link = 'http://followunfollow.herokuapp.com' + y
             fb.new_image.save("background" + '.png', File(open('static/test/background.png')))
             fb.link = 'http://followunfollow.herokuapp.com'+fb.new_image.url
+            fb.message = message
             fb.save()
             background.show()
 
@@ -192,37 +197,43 @@ def share_post(request, pk):
     albumid = ''
     for s in statuses:
         print "s.image: ", s.new_image.url
-        with open("static/test/background.png", "rb") as image:
-            parameters = {'name': 'Testing',
-                          'link': 'http://followunfollow.herokuapp.com/test',
-                          'message': 'Testing',
-                          'description': 'Testing',
-                           'picture': s.link,
-                          'access_token': auth.extra_data['access_token']
-                          }
-            r = requests.post('https://graph.facebook.com/me/feed', params=parameters)
-            print "facebook user feed", r.status_code
-            posted_image_id = graph.put_wall_post(parameters)
+        # with open("static/test/background.png", "rb") as image:
+        parameters = {'name': 'Testing',
+                      'link': 'http://followunfollow.herokuapp.com/test',
+                      'message': s.message,
+                      'description': 'Place Image Over your Profile',
+                      'picture': s.link,
+                      'access_token': auth.extra_data['access_token']
+                      }
+        r = requests.post('https://graph.facebook.com/me/feed', params=parameters)
+        print "facebook user feed", r.status_code
+        posted_image_id = graph.put_wall_post(parameters)
 
     file.close()
-    print "link:",status.link
+    print "link:", status.link
     # status.publish_timestamp = datetime.datetime.now()
     status.save()
 
     return redirect('test')
 
+
+CONSUMER_KEY = 'HISKYRsVumzfw29OsuO6uemJY'
+CONSUMER_SECRET = '2sUI8VMPSaYpma1wQeQn6GSKP9o08uQAbtYQH5JAhIufWPT4Xv'
+ACCESS_TOKEN_KEY = '587179393-0WzjoaIUP8hg45wmabvebNLErFHcTOTquh4HJyeQ'
+ACCESS_TOKEN_SECRET = 'uu0uZiv3p1jkiFWcXBUrZh4fIpwkKbHeZHPRjcZia7dNA'
 from TwitterAPI import TwitterAPI
 @login_required
 def tweet(request, pk):
     c = RequestContext(request)
-    # print "request: ", request.session
-    # print "c: ", c
     user = request.user
     print "user: ", user.social_auth
-    CONSUMER_KEY = 'HISKYRsVumzfw29OsuO6uemJY'
-    CONSUMER_SECRET = '2sUI8VMPSaYpma1wQeQn6GSKP9o08uQAbtYQH5JAhIufWPT4Xv'
-    ACCESS_TOKEN_KEY = '587179393-0WzjoaIUP8hg45wmabvebNLErFHcTOTquh4HJyeQ'
-    ACCESS_TOKEN_SECRET = 'uu0uZiv3p1jkiFWcXBUrZh4fIpwkKbHeZHPRjcZia7dNA'
+
+
+    if request.method == "GET":
+        print "request is get"
+        message = request.GET.get("message")
+        print "message: ", message
+
     tw_profile = TwitterStatus.objects.filter(username=user)
     images = ImagesList.objects.filter(pk=pk)
     for i in images:
@@ -237,6 +248,7 @@ def tweet(request, pk):
             background.save('static/test/background.png', "PNG")
             tw.new_image.save("background" + '.png', File(open('static/test/background.png')))
             tw.link = "https://followunfollow.herokuapp.com" + tw.new_image.url
+            tw.message = message
             tw.save()
 
             background.show()

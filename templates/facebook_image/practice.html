@@ -16,16 +16,14 @@
 
     <link rel="stylesheet" href="{% static 'css/site_base.css' %}" />
     <link rel="stylesheet" href="{% static 'css/style.css' %}" />
+    <link rel="stylesheet" href="{% static 'css/smoothDivScroll.css' %}" />
 
     <!-- js -->
     <script src="{% static 'js/jquery-1.9.1.min.js' %}"></script>
     <!-- bxSlider CSS file -->
     <script src="{% static 'js/modernizr.js' %} "></script>
 
-    <!-- bxSlider Javascript file -->
-    <script src="{% static 'js/jquery.bxslider.min.js' %}"></script>
-    <!-- bxSlider CSS file -->
-    <link href="{% static 'css/jquery.bxslider.css' %}" rel="stylesheet" />
+
 
     <script>
         $(document).ready(function(){
@@ -61,6 +59,35 @@
 
         });
     </script>
+
+    <style type="text/css">
+
+		#image-scroll-area
+		{
+			width:95%;
+			height: 180px;
+			position: relative;
+		}
+
+		/* Replace the last selector for the type of element you have in
+		   your scroller. If you have div's use #makeMeScrollable div.scrollableArea div,
+		   if you have links use #makeMeScrollable div.scrollableArea a and so on. */
+{#		#image-scroll-area div.scrollableArea img#}
+{#		{#}
+{#			position: relative;#}
+{#			float: left;#}
+{#			margin: 0;#}
+{#			padding: 0;#}
+{#			/* If you don't want the images in the scroller to be selectable, try the following#}
+{#			   block of code. It's just a nice feature that prevent the images from#}
+{#			   accidentally becoming selected/inverted when the user interacts with the scroller. */#}
+{#			-webkit-user-select: none;#}
+{#			-khtml-user-select: none;#}
+{#			-moz-user-select: none;#}
+{#			-o-user-select: none;#}
+{#			user-select: none;#}
+{#		}#}
+	</style>
 
 
 </head>
@@ -110,13 +137,13 @@
 
                     <!-- images to overhead -->
                     <div id="effect-1" class="effects clearfix">
-
-                        {% for i in images_display %}
-                            <div class="img">
-                                <img src="{{ i.image.url }}" class="img-textual"  alt="Picture"  id='{{ i.id }}'>
-                            </div>
-                        {% endfor %}
-
+                        <div id="image-scroll-area">
+                            {% for i in images_display %}
+                                <div class="img">
+                                    <img src="{{ i.image.url }}" class="img-textual"  alt="Picture"  id='{{ i.id }}'>
+                                </div>
+                            {% endfor %}
+                        </div>
                     </div>
                     <!-- /images to overhead -->
 
@@ -140,27 +167,26 @@
                         </div>
                         <!-- end user's profile information -->
 
-                        <!--Sharing and tweet button -->
+                       <!-- <div class="fb-share-button" data-href="http://followunfollow.herokuapp.com/test" data-layout="button" data-size="large" data-mobile-iframe="true">
+                            <a class="fb-xfbml-parse-ignore" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Ffollowunfollow.herokuapp.com%2Ftest%2F&amp;src=http://followunfollow.herokuapp.com">Share</a> 
+                        </div> -->
+                        <br>
+                        <form method="GET" action=".">
+                            Status:
+                            <input type="text" id="message" name="message"  />
+                        </form>
+
+                        <!--Sharing and tweet button-->
                         <div class="btn-sharing">
                             <a class="fb-share-button" href="" id='share_btn'><img src="{%  static 'img/imgpsh_fullsize (1)fb.png' %}" ></a>
                         </div>
                         <div class="btn-sharing">
                             <a class="twitter-share-button"  href="" id='tweet_btn'><img src="{%  static 'img/imgpsh_fullsize (1)tw.png' %}" ></a>
-                            {#                 <a href="/tweet/" class="twitter-share-button" data-show-count="false">Tweet</a><script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>#}
+                                        <!--     <a href="/tweet/" class="twitter-share-button" data-show-count="false">Tweet</a><script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>-->
                         </div>
 
                         <div class="clearfix"></div>
                         <!-- end Sharing and tweet button -->
-
-                        {#         {% social_widget_render "facebook/share_button.html" locale="en_US" app_id=12345678 href="developers.facebook.com" layout="none" %} #}
-
-                        {#        <a href="/tweet/" class="twitter-share-button" data-show-count="false">Tweet</a><script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>#}
-
-                        {#        <div class="fb-share-button" data-href="http://followunfollow.herokuapp.com/media/imageslist/new7.png" data-layout="button_count" data-mobile-iframe="true"><a class="fb-xfbml-parse-ignore" target="_blank" href="http://followunfollow.herokuapp.com/media/imageslist/new7.png&amp;src=http://followunfollow.herokuapp.com/media/imageslist/new7.png">Share</a></div>#}
-
-
-                        {#        <div class="fb-share-button" data-href="/share/" data-layout="button" data-size="large" data-mobile-iframe="false"><a class="fb-xfbml-parse-ignore" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Flocalhost%3A9090%2Ftest%2F&amp;src=sdkpreparse">Share</a></div>#}
-
 
                     </div>
 
@@ -189,12 +215,15 @@
     $('.img-textual').on('click',function() {
 
         var id_image = $(this).attr('id');
+        var message = $('#message').val();
         console.log("this "+ id_image)
-        $('#share_btn').attr('href', '/share/'+id_image)
+        $('#share_btn').attr('href', '/share/'+id_image+'/?message='+message+'')
     })
     $('.img-textual').on('click',function() {
 
         var id_image = $(this).attr('id');
+        var message = $('#message').val();
+        alert(message)
         console.log("this "+ id_image)
         $('#tweet_btn').attr('href', '/tweet/'+id_image)
     })
@@ -233,6 +262,37 @@
         var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
     })();
 </script>
+
+
+<!-- jQuery UI (Custom Download containing only Widget and Effects Core)
+	     You can make your own at: http://jqueryui.com/download -->
+	<script src="{% static 'js/jquery-ui-1.10.3.custom.min.js' %}" type="text/javascript"></script>
+
+<!-- Latest version (3.1.4) of jQuery Mouse Wheel by Brandon Aaron
+	     You will find it here: https://github.com/brandonaaron/jquery-mousewheel -->
+	<script src="{% static 'js/jquery.mousewheel.min.js' %}" type="text/javascript"></script>
+
+	<!-- jQuery Kinectic (1.8.2) used for touch scrolling -->
+	<!-- https://github.com/davetayls/jquery.kinetic/ -->
+	<script src="{% static 'js/jquery.kinetic.min.js' %} " type="text/javascript"></script>
+
+	<!-- Smooth Div Scroll 1.3 minified-->
+	<script src="{% static 'js/jquery.smoothdivscroll-1.3-min.js' %} " type="text/javascript"></script>
+
+	<!-- If you want to look at the uncompressed version you find it at
+	     js/jquery.smoothDivScroll-1.3.js -->
+    <!-- Plugin initialization -->
+	<script type="text/javascript">
+
+		// Initialize the plugin with no custom options
+		$(document).ready(function () {
+
+			// None of the options are set
+			$("div#image-scroll-area").smoothDivScroll({
+				autoScrollingMode: "onStart"
+			});
+		});
+	</script>
 
 </body>
 </html>
