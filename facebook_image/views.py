@@ -142,6 +142,7 @@ def save(request):
 #     user = request.user
 #     user = User.objects.get(username=user.username)
 #share image on facebook
+import requests
 @login_required
 def share_post(request, pk):
     print "this is error"
@@ -189,8 +190,27 @@ def share_post(request, pk):
     data = file.read()
     # graph.put_object('me', 'photos', message="You can put a caption here", source=file.read())
     albumid = ''
+    for s in statuses:
+        print "s.image: ", s.new_image.url
     with open("static/test/background.png", "rb") as image:
-        posted_image_id = graph.put_photo(image)
+    #     post = {"name": "Testing",
+    #             "link": "http://followunfollow.herokuapp.com/test",
+    #             "description": "This is a longer description of the attachment",
+    #             "picture": s.new_image
+    #             }
+
+        parameters = {'name': 'Testing',
+                      'link': 'http://followunfollow.herokuapp.com/test',
+                      'message': 'Testing',
+                      'description': 'Testing',
+                       'picture': image,
+                      'access_token': auth.extra_data['access_token']
+                      }
+
+        r = requests.post('https://graph.facebook.com/me/feed', params=parameters)
+        print "facebook user feed", r.status_code
+
+        # posted_image_id = graph.put_wall_post(post)
     file.close()
     print "link:",status.link
     # status.publish_timestamp = datetime.datetime.now()
@@ -237,7 +257,7 @@ def tweet(request, pk):
         print "in the loop"
         file = open('static/test/background.png', 'rb')
         data = file.read()
-        r = api.request('statuses/update_with_media', {'status': 'Your tweet'}, {'media[]': data})
+        r = api.request('statuses/update_with_media', {'status': 'http://followunfollow.herokuapp.com/test/'}, {'media[]': data})
     return redirect('test')
 
 
