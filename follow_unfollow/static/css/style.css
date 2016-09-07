@@ -301,7 +301,7 @@ a.expand {
  }
  .controls{
    width: 300px;
-   height:300px;
+   /*height:300px;*/
    float: left;
  }
  .clearfix{

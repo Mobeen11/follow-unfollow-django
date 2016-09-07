@@ -204,7 +204,7 @@ def share_post(request, pk):
                       'message': s.message,
                       'description': 'Place Image Over your Profile',
                       'picture': s.link,
-                      # 'access_token': auth.extra_data['access_token']
+                      'access_token': auth.extra_data['access_token']
                       }
         r = requests.post('https://graph.facebook.com/me/feed', params=parameters)
         print "facebook user feed", r.status_code
@@ -241,10 +241,10 @@ def tweet(request, pk):
         for tw in tw_profile:
             print "this is tw profile"
             background = Image.open(tw.profile_image)
-            background = background.resize((255, 230))
+            background = background.resize((300, 300))
             # change the file name accordingly
             foreground = Image.open(i.image)
-            foreground = foreground.resize((250, 230))
+            foreground = foreground.resize((300, 300))
             background.paste(foreground, (0, 0), foreground)
             background.save('static/test/background.png', "PNG")
             tw.new_image.save("background" + '.png', File(open('static/test/background.png')))
@@ -263,7 +263,7 @@ def tweet(request, pk):
         print "in the loop"
         file = open('static/test/background.png', 'rb')
         data = file.read()
-        r = api.request('statuses/update_with_media', {'status': 'http://followunfollow.herokuapp.com/test/'}, {'media[]': data})
+        r = api.request('statuses/update_with_media', {'status': s.message+' '+'\nhttp://followunfollow.herokuapp.com/test/'}, {'media[]': data})
     return redirect('test')
 
 

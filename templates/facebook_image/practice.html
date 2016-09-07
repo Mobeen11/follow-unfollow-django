@@ -157,12 +157,12 @@
                             {% if user.is_authenticated %}
                                 <img src="{{ image.url }}" class='imgchange' width='300px' height='300px' >
                                 <div class="img-overlay-mask">
-                                    <img src="{% static 'img/trans.png' %}" id="mask-image" width='255' height='230'>
+                                    <img src="{% static 'img/trans.png' %}" class="mask-image" width='255' height='230'>
                                 </div>
 
 
                             {% else %}
-                                    <img src="{% static 'img/default.png' %}" id="mask-image" width='300px' height='300px'>
+                                    <img src="{% static 'img/default.png' %}" class="mask-image" width='300px' height='300px'>
                             {% endif %}
                         </div>
                         <!-- end user's profile information -->
@@ -216,23 +216,40 @@
 
         var id_image = $(this).attr('id');
         var message = $('#message').val();
+
         console.log("this "+ id_image)
-        $('#share_btn').attr('href', '/share/'+id_image+'/?message='+message+'')
-    })
+        var mask_img= $('.mask-image').attr('id', id_image)
+{#        $('#share_btn').attr('href', '/share/'+id_image+'/?message='+message+'')#}
+    });
+    $('#share_btn').on('click', function () {
+        var message = $('#message').val();
+{#        alert(message)#}
+        var mask_image_id = $('.mask-image').attr('id');
+{#        alert("image id mask " + mask_image_id);#}
+        $('#share_btn').attr('href', '/share/'+mask_image_id+'/?message='+message+'')
+    });
+
+
     $('.img-textual').on('click',function() {
 
         var id_image = $(this).attr('id');
         var message = $('#message').val();
 
         console.log("this "+ id_image)
-        $('#tweet_btn').attr('href', '/tweet/'+id_image)
-    })
-
+{#        $('#tweet_btn').attr('href', '/tweet/'+id_image)#}
+    });
+      $('#tweet_btn').on('click', function () {
+        var message = $('#message').val();
+{#        alert(message)#}
+        var mask_image_id = $('.mask-image').attr('id');
+{#        alert("image id mask " + mask_image_id);#}
+        $('#tweet_btn').attr('href', '/tweet/'+mask_image_id+'?message='+message+'')
+    });
     $( ".img-textual" ).click(function() {
 
         var get_text = $(this).attr('src');
 
-        $("#mask-image").attr('src', get_text);
+        $(".mask-image").attr('src', get_text);
     });
 
 
