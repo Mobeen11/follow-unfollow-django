@@ -195,16 +195,17 @@ def share_post(request, pk):
         print "s.image: ", s.new_image.url
         # with open("static/test/background.png", "rb") as image:
         parameters = {
-                      'name': 'FollowunFollow',
-                      'link': 'http://followunfollow.herokuapp.com/test',
-                      'message': s.message,
-                      'description': 'Place Image Over your Profile',
-                      'picture': s.link,
+                      "name": 'FollowunFollow',
+                      "link": 'http://followunfollow.herokuapp.com/test',
+                      "message": s.message,
+                      "description": 'Place Image Over your Profile',
+                      "picture": s.link,
                       'access_token': auth.extra_data['access_token']
                       }
         r = requests.post('https://graph.facebook.com/me/feed', params=parameters)
         print "facebook user feed", r.status_code
-        posted_image_id = graph.put_wall_post(parameters)
+        # posted_image_id = graph.put_wall_post(parameters['picture'])
+        # print "posted Data: ", posted_image_id
 
     file.close()
     print "link:", status.link
