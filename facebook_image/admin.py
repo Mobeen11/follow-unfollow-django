@@ -3,6 +3,7 @@ from .models import *
 # Register your models here.
 
 admin.site.register(Profile)
+admin.site.register(Group)
 admin.site.register(FacebookStatus)
 admin.site.register(TwitterStatus)
 admin.site.register(ImagesList)

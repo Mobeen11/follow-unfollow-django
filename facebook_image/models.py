@@ -65,3 +65,15 @@ class ImagesList(models.Model):
 
     def __str__(self):
         return str(self.image)
+
+
+class Group(models.Model):
+    alias = models.CharField(max_length=255, unique=True,  blank=True)
+    title = models.CharField(max_length=255, null=True, blank=True)
+    followers_count = models.IntegerField(null=True, blank=True)
+    total_donations_count = models.IntegerField(null=True, blank=True)
+    donations = models.IntegerField(null=True, blank=True)
+    @property
+    def total_score(self):
+        score = self.followers_count *1 + (self.total_donations_count*10 + self.donations*10)
+        return score

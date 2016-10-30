@@ -1,0 +1,101 @@
+<html>
+<head>
+    <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+    <script type="text/javascript">
+        google.load("visualization", "1", {packages:["corechart"]});
+        google.setOnLoadCallback(drawChart);
+
+        var chart;
+        var data;
+        var options;
+
+        function drawChart() {
+            dataTable = google.visualization.arrayToDataTable([
+                ['Year', 'Sales', 'Expenses'],
+                ['2004',  1000,      400],
+                ['2005',  1170,      460],
+                ['2006',  660,       1120],
+                ['2007',  1030,      540]
+            ]);
+
+            options = {
+                title: 'Company Performance',
+                hAxis: {title: 'Year', titleTextStyle: {color: 'red'}}
+            };
+
+            chart = new google.visualization.ColumnChart(document.getElementById('chart_div'));
+            updateChart();
+{#            chart.draw(dataTable, options);#}
+        }
+
+        // function to update the chart with new data.
+        function updateChart() {
+
+            dataTable = new google.visualization.DataTable();
+
+{#            var newData = [[ 'Year','Other'],#}
+{#                            ['2004',  232  ],#}
+{#                            ['2005',  421  ],#}
+{#                            ['2006',  4324 ]#}
+{#            ];#}
+            var newData = [[ 'Year','Other',{ role: "style" }],
+                            ['2004',  232 ,  'color: gray'   ],
+                            ['2005',  421,   'color: #76A7FA'],
+                            ['2006',  4324,  'opacity: 0.2'  ]
+            ];
+
+            // determine the number of rows and columns.
+            var numRows = newData.length;
+            var numCols = newData[0].length;
+
+            // in this case the first column is of type 'string'.
+            dataTable.addColumn('string', newData[0][0]);
+            dataTable.addColumn('string', newData[0][2]);
+
+            // all other columns are of type 'number'.
+            for (var i = 1; i < numCols; i++)
+                dataTable.addColumn('number', newData[0][i]);
+
+            // now add the rows.
+            for (var i = 1; i < numRows; i++)
+{#                console.log(newData[0][i]);#}
+                dataTable.addRow(newData[2][i]);
+
+            // redraw the chart.
+            //  chart.draw(dataTable, options);
+            var view = new google.visualization.DataView(dataTable);
+            view.setColumns([0,
+                { calc: "stringify",
+                    sourceColumn: 1,
+                    type: "string",
+                    role: "annotation"
+                },
+
+                {
+                    calc: "stringify",
+                    sourceColumn: 2,
+                    type: "string",
+                    role: "annotation"
+                },2
+
+                ]);
+
+            var options = {
+                title: "Density of Precious Metals, in g/cm^3",
+                width: 600,
+                height: 400,
+                bar: {groupWidth: "95%"},
+                legend: { position: "none" },
+            };
+            var chart = new google.visualization.BarChart(document.getElementById("chart_div"));
+            chart.draw(view, options);
+
+        }
+
+    </script>
+</head>
+<body>
+<div id="chart_div" style="width: 900px; height: 500px;"></div>
+<button onclick='updateChart();'>update chart</button>
+</body>
+</html>

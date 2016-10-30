@@ -13,6 +13,8 @@ urlpatterns = [
     # url(r'^share/$', 'facebook_image.views.share_post', name='share'),
     # url(r'^tweet/$', 'facebook_image.views.tweet', name='tweet'),
     url(r'^tweet/(?P<pk>\d+)$', 'facebook_image.views.tweet', name='tweet'),
+    url(r'^graph/', 'facebook_image.views.graph', name='graph'),
+    url(r'^picture/', 'facebook_image.views.picture', name='picture'),
 
 ]+ static(settings.STATIC_URL, document_root=settings.STATIC_ROOT) + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 

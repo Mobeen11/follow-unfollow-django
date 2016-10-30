@@ -8,6 +8,7 @@ from django.core.files import File
 import datetime
 import facebook
 import urllib
+import urllib2
 from urlparse import urlparse
 from twitter import *
 from twython import Twython
@@ -382,6 +383,37 @@ def tweet(request, pk):
 #change the profile picture twitter = Twython(APP_KEY, APP_SECRET, OAUTH_TOKEN, OAUTH_TOKEN_SECRET)
 #avatar = open('myImage.png', 'rb')
 #twitter.update_profile_image(image=avatar)
+
+
+def graph(request):
+    context = {}
+    list_of_graph_1 = [20, 30, 40]
+    list_of_graph_2 = [40, 30, 30]
+    list_of_graph_3 = [50, 30, 20]
+    group = Group.objects.all()
+
+    context = {
+        'list1':list_of_graph_1,
+        'list2':list_of_graph_2,
+        'list3':list_of_graph_3,
+        'group':group,
+
+    }
+    return render(request, 'facebook_image/graphs_2.html', context)
+
+
+def picture(request):
+    check = False
+    request = urllib2.Request(
+        r'http://127.0.0.1:9090/graph/',
+        headers={'User-Agent': 'Mozilla/5.0 (X11; U; Linux i686) Gecko/20071127 firefox/2.0.0.11'})
+    page = urllib2.urlopen(request)
+
+    with open('somefile.png', 'wb') as f:
+        f.write(page.read())
+    return redirect('/graph/')
+    # return render(request, 'facebook_image/graphs_2.html', )
+
 
 
 
